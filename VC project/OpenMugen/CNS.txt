@@ -1,0 +1,20 @@
+[Statedef 170]
+type = a
+ctrl = 0
+anim = 0
+velset = 0,0
+
+[State 170, 1]
+type = ChangeState
+trigger1 = Anim != 0 && Anim != 5
+trigger2 = Anim = 5 && AnimTime = 0 ;Turn anim over
+Value	= 20
+
+[State 170, 2]
+type = ChangeAnim
+trigger1 = 1
+Value	= 0
+
+[Statedef 20]
+anim = 0
+
