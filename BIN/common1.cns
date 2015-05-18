@@ -39,10 +39,10 @@ trigger1 = Anim != 0 && Anim != 5
 trigger2 = Anim = 5 && AnimTime = 0 ;Turn anim over
 value = 0
 
-[State 0, 2]
-type = VelSet
-trigger1 = Time = 0
-y = 0
+;[State 0, 2]
+;type = VelSet
+;trigger1 = Time = 0
+;y = 0
 
 ;[State 0, 3] ;Stop moving if low velocity or 4 ticks pass
 ;type = VelSet
@@ -50,11 +50,11 @@ y = 0
 ;trigger2 = Time = 4
 ;x = 0
 
-[State 0, 4] ;Are you dead?
-type = ChangeState
-trigger1 = !alive
-value = 5050
-ctrl = 0
+;[State 0, 4] ;Are you dead?
+;type = ChangeState
+;trigger1 = !alive
+;value = 5050
+;ctrl = 0
 
 ;---------------------------------------------------------------------------
 ; Stand to Crouch

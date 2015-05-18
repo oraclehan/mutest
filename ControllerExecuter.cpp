@@ -148,7 +148,7 @@ void CControllerExecuter::ExecuteController(int nController)
 void CControllerExecuter::ChangeState()
 {
    int nStateToChange;
-    //Get the Statenumber to wich it will be changed
+    //Get the Statenumber to which it will be changed
     nStateToChange=(int)((CPlayer*)m_pPlayer1)->GetParamValue(PA_VALUE);
     ((CPlayer*)m_pPlayer1)->ChangeState(nStateToChange);
        

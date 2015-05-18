@@ -15,7 +15,7 @@ CAllocater::~CAllocater()
 
 void CAllocater::SetMemListFree(MEMLIST* lpList)
 {
-  memset(lpList,0,sizeof(MEMLIST)*100);   
+	memset(lpList,0,sizeof(MEMLIST)*100);   
 }
 
 
@@ -42,19 +42,19 @@ void CAllocater::ShowMemUsage()
 //Allocate memory and save its address in a list
 void* CAllocater::Alloc(size_t nSize,int nMemInit)
 {
-      if(bFree)
-         bFree=false;
+	if(bFree)
+		bFree=false;
       
-      //if we have more alloaction as we can hold in ouer list then grow ouer list
-      if(nAllocNumber > nMemListSize-1)
-      {
-        //grow the list by 100
-        nMemListSize+=100;
-        lpMemList=(MEMLIST*)realloc(lpMemList,sizeof(MEMLIST)*nMemListSize);
-        //set memlist empty
-        SetMemListFree(&lpMemList[nMemListSize-100]);
+	//if we have more alloaction as we can hold in ouer list then grow ouer list
+	if(nAllocNumber > nMemListSize-1)
+	{
+		//grow the list by 100
+		nMemListSize+=100;
+		lpMemList=(MEMLIST*)realloc(lpMemList,sizeof(MEMLIST)*nMemListSize);
+		//set memlist empty
+		SetMemListFree(&lpMemList[nMemListSize-100]);
                                 
-      }
+	}
 
 	 
       u32 i;
@@ -153,7 +153,7 @@ void CAllocater::FreeAllocater()
      } 
     // PrintMessage("CAllocater::%s unfreed %i bytes",strAllocName,nAllocSize);
      //clear ouer memlist         
-     free(lpMemList);
+     //free((void*)lpMemList);
      
 }
 
@@ -184,33 +184,33 @@ void CMemManager::InitManager()
 
 CAllocater* CMemManager::GetAllocater(int nAllocater)
 {
-  return lpAlloc[nAllocater];          
+	return lpAlloc[nAllocater];          
 }
 
 //free all the allocaters from mem
 void CMemManager::FreeManager()
 {
-     for(int i=0;i<7;i++)
-     {
-             lpAlloc[i]->FreeAllocater();
-             delete lpAlloc[i];
-     }
+	for(int i=0; i<7; i++)
+	{
+		lpAlloc[i]->FreeAllocater();
+		delete lpAlloc[i];
+	}
      
 }
 //show and return the memusage
 size_t CMemManager::GetMemUsage()
 {
-   size_t nMem=0;
-   
-   PrintMessage("======================Memory Manager============================");
-   PrintMessage("|Name:               |Allocated bytes                          |"); 
-   PrintMessage("----------------------------------------------------------------");
+	size_t nMem=0;
 
-   for(int i=0;i<7;i++)
-   {
-   PrintMessage("|%20s                  |%20i  | ",lpAlloc[i]->GetName(),lpAlloc[i]->GetMemUsage());
-   }
-   PrintMessage("================================================================");  
-   return nMem;
+	PrintMessage("======================Memory Manager============================");
+	PrintMessage("|Name:               |Allocated bytes                          |"); 
+	PrintMessage("----------------------------------------------------------------");
+
+	for(int i=0;i<7;i++)
+	{
+		PrintMessage("|%20s                  |%20i  | ",lpAlloc[i]->GetName(),lpAlloc[i]->GetMemUsage());
+	}
+	PrintMessage("================================================================");  
+	return nMem;
     
 }

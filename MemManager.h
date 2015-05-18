@@ -1,15 +1,15 @@
 #ifndef __MEMMANAGER__H
 #define __MEMMANAGER__H
 
-   enum {
-       MAINMENU=0,
-       STAGE=1,
-       ENGINE=2,
-       P1=3,
-       P2=4,
-       P3=5,
-       P4=6
-     };
+enum {
+	MAINMENU=0,
+	STAGE=1,
+	ENGINE=2,
+	P1=3,
+	P2=4,
+	P3=5,
+	P4=6
+};
 
 class CAllocater
 {
@@ -21,10 +21,10 @@ class CAllocater
    MEMLIST *lpMemList;
    bool bFree;
    
-enum { FREE=0x00,
-       ALLOC=0xff
-
-      };
+   enum { 
+	   FREE=0x00,
+	   ALLOC=0xff
+   };
       void SetMemListFree(MEMLIST* lpList); 
 public:
       //Constructor & Desctructor 

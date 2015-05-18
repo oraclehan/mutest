@@ -3,30 +3,30 @@
 
 ; Player information
 [Info]
-name = "Kung Fu Man"        ;Name of character
-displayname = "Kung Fu Man" ;Name of character to display
-versiondate = 11,01,2001    ;Version date of character (MM-DD-YYYY)
-mugenversion = 11,01,2001   ;Version of M.U.G.E.N character works on
-author = "Elecbyte"         ;Character author name
-pal.defaults = 6,3,4,2      ;Default palettes in order of preference
+name ="Kung Fu Man"
+displayname ="Kung Fu Man"
+versiondate =11,01,2001
+mugenversion =11,01,2001
+author ="Elecbyte"
+pal.defaults =6,3,4,2
 
 ; Files for the player
 [Files]
-cmd     = kfm.cmd   ;Command set
-cns     = kfm.cns   ;Constants
-st      = kfm.cns   ;States
-stcommon = common1.cns ;Common states
-sprite  = kfm.sff   ;Sprite
-anim    = kfm.air   ;Animation
-sound   = kfm.snd   ;Sound
-pal1    = kfm6.act  ;Palettes (can have up to 12)
-pal2    = kfm4.act
-pal3    = kfm2.act
-pal4    = kfm5.act
-pal5    = kfm3.act
-pal6    = kfm.act
+cmd     =kfm.cmd
+cns     =kfm.cns
+st      =kfm.cns
+stcommon =common1.cns
+sprite  =kfm.sff
+anim    =kfm.air
+sound   =kfm.snd
+pal1=kfm6.act
+pal2=kfm4.act
+pal3=kfm2.act
+pal4=kfm5.act
+pal5=kfm3.act
+pal6=kfm.act
 
 ; Arcade mode
 [Arcade]
-intro.storyboard = intro.def
-ending.storyboard = ending.def
+intro.storyboard =intro.def
+ending.storyboard =ending.def
