@@ -1,0 +1,13 @@
+[PalFXDef]
+AddR=7
+AddG=-200
+AddB=-200
+SinAddR=30
+SinAddG=30
+SinAddB=0
+Period=10
+MulR=256
+MulG=256
+MulB=256
+Color=0
+InvertAll=1

@@ -713,7 +713,9 @@ void CStateParser::EvaluateExpression(CTokenizer &tok,CStateManager &StateManage
       
      Term(tok,StateManager);
      
-     while( tok.CheckToken("+",false) || tok.CheckToken("-",false) && !tok.AtEndOfLine() )
+     while( tok.CheckToken("+",false) || tok.CheckToken("-",false) ||
+			tok.CheckToken("&&",false) || tok.CheckToken("||",false) 
+		 && !tok.AtEndOfLine() )
      {  
         
     
@@ -730,6 +732,20 @@ void CStateParser::EvaluateExpression(CTokenizer &tok,CStateManager &StateManage
            StateManager.AddInstruction(OP_SUB,0,"#");
              
         }
+
+		if( tok.CheckToken("&&") )
+		{
+			Term(tok,StateManager);
+			StateManager.AddInstruction(OP_LOGAND,0,"#");
+
+		}
+
+		if( tok.CheckToken("||") )
+		{
+			Term(tok,StateManager);
+			StateManager.AddInstruction(OP_OR,0,"#");
+
+		}
   
      }
 }
@@ -745,8 +761,8 @@ void CStateParser::Term(CTokenizer &tok,CStateManager &StateManager)
             tok.CheckToken("=",false) || tok.CheckToken("!=",false) ||
             tok.CheckToken("<",false) || tok.CheckToken("<=",false) ||
             tok.CheckToken(">",false) || tok.CheckToken(">=",false) ||
-            tok.CheckToken(":",false) || tok.CheckToken("&&",false) || 
-            tok.CheckToken("||",false)|| tok.CheckToken("^^",false) ||
+            tok.CheckToken(":",false) || /*tok.CheckToken("&&",false) || 
+            tok.CheckToken("||",false)||*/ tok.CheckToken("^^",false) ||
             tok.CheckToken("&",false) || tok.CheckToken("~",false)  ||
             tok.CheckToken("|",false) || tok.CheckToken("^",false)  || 
             tok.CheckToken("%",false) || tok.CheckToken("(", false) 	
@@ -818,9 +834,9 @@ void CStateParser::Term(CTokenizer &tok,CStateManager &StateManager)
                 }
                 else // is the = op
                 {                
-                //evalute the right side of the operator
-                EvaluateExpression(tok,StateManager);
-                StateManager.AddInstruction(OP_EQUAL,0,"#");
+					//evalute the right side of the operator
+					EvaluateExpression(tok,StateManager);
+					StateManager.AddInstruction(OP_EQUAL,0,"#");
                 }
            }
            
@@ -878,8 +894,10 @@ void CStateParser::Term(CTokenizer &tok,CStateManager &StateManager)
                 else // is the != op
                 {                
 					//evalute the right side of the operator
-					EvaluateExpression(tok,StateManager);
+					//EvaluateExpression(tok,StateManager);
+					Primary(tok,StateManager);
 					StateManager.AddInstruction(OP_NOTEQUAL,0,"#");
+					continue;
                 }
                 //EvaluateExpression(tok,StateManager);
                 //StateManager.AddInstruction(OP_NOTEQUAL,0,"#");
@@ -909,17 +927,17 @@ void CStateParser::Term(CTokenizer &tok,CStateManager &StateManager)
                 StateManager.AddInstruction(OP_GRAETEREQUAL,0,"#");
            }
            
-           if( tok.CheckToken("&&") )
-           {    //evalute the right side of the operator
-                EvaluateExpression(tok,StateManager);
-                StateManager.AddInstruction(OP_LOGAND,0,"#");
-           }
+//            if( tok.CheckToken("&&") )
+//            {    //evalute the right side of the operator
+//                 EvaluateExpression(tok,StateManager);
+//                 StateManager.AddInstruction(OP_LOGAND,0,"#");
+//            }
            
-           if( tok.CheckToken("||") )
-           {    //evalute the right side of the operator
-                EvaluateExpression(tok,StateManager);
-                StateManager.AddInstruction(OP_LOGOR,0,"#");
-           }
+//            if( tok.CheckToken("||") )
+//            {    //evalute the right side of the operator
+//                 EvaluateExpression(tok,StateManager);
+//                 StateManager.AddInstruction(OP_LOGOR,0,"#");
+//            }
            
            if( tok.CheckToken("^^") ) // is this realy needed?
                                       //FIXME:Cant read ^^

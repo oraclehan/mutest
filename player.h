@@ -25,78 +25,79 @@
 
 class CPlayer
 {
-CAllocater         *m_pAlloc;
-CVideoSystem       *m_pVideoSystem;
-CSffManager         m_SffManager;
-CAirManager         m_AirManager;
-CStateManager       m_StateManager;  
-CGameTimer         *m_pTimer;
-CVirtualMachine    *m_pVMachine;
-CControllerExecuter m_ControllerExec;
-CCmdManager         m_CmdManager;
-//Player information
-float              x,y;
-float              xVel,yVel;
-float              nGround;
-s32                nAnimNumber;
-u32                nStateTime;
-u8                 nStateType;
-u8                 nPhysic;
-u8                 nMoveType;
-u8                 nSprPrio;
-s16                nLife;
-s16                nPower;
-bool               bHitDefPresit;
-bool               bHitCounterPresit;
-bool               bMoveHitPresit;        
-bool               bCtrl;
-bool               bRightFaced;
-bool               bDebugInfo;
-bool               bHitDef;
-bool               bAlive;
-char               strCommand[50];
-PLSTATEDEF         *lpCurrStatedef;
-public:
-PLAYERCONST         myPlayerConst;
+	CAllocater         *m_pAlloc;
+	CVideoSystem       *m_pVideoSystem;
+	CSffManager         m_SffManager;
+	CAirManager         m_AirManager;
+	CStateManager       m_StateManager;  
+	CGameTimer         *m_pTimer;
+	CVirtualMachine    *m_pVMachine;
+	CControllerExecuter m_ControllerExec;
+	CCmdManager         m_CmdManager;
+	//Player information
+	float              x,y;
+	float              xVel,yVel;
+	float              nGround;
+	s32                nAnimNumber;
+	u32                nStateTime;
+	u8                 nStateType;
+	u8                 nPhysic;
+	u8                 nMoveType;
+	u8                 nSprPrio;
+	s16                nLife;
+	s16                nPower;
+	bool               bHitDefPresit;
+	bool               bHitCounterPresit;
+	bool               bMoveHitPresit;        
+	bool               bCtrl;
+	bool               bRightFaced;
+	bool               bDebugInfo;
+	bool               bHitDef;
+	bool               bAlive;
+	char               strCommand[50];
+	PLSTATEDEF         *lpCurrStatedef;
+	PLSTATE			   *lpCurrState;
+	public:
+	PLAYERCONST         myPlayerConst;
 
-       CPlayer();
-       ~CPlayer();
-       void SetPointers(CVideoSystem *p,CAllocater *a,CGameTimer *t);
-       bool LoadPlayer(const char* strPlayer);
-       void UpDatePlayer(const KEYBOARDDATA &data);
-       void DrawPlayer();
+    CPlayer();
+    ~CPlayer();
+    void SetPointers(CVideoSystem *p,CAllocater *a,CGameTimer *t);
+    bool LoadPlayer(const char* strPlayer);
+    void UpDatePlayer(const KEYBOARDDATA &data);
+    void DrawPlayer();
 //Set functions
-      void SetVM(CVirtualMachine *p){m_pVMachine=p;}
-      void SetPos(s16 xAxis,s16 yAxis){x=xAxis;y=yAxis;}
-      void VelSetX(float xvel){xVel=xvel;}
-      void VelSetY(float yvel){yVel=yvel;}
-      void SetDebug(bool bDebug){bDebugInfo=bDebug;}
-      void FaceLeft(){bRightFaced=false;}
-      void FaceRight(){bRightFaced=true;}
+    void SetVM(CVirtualMachine *p){m_pVMachine=p;}
+    void SetPos(s16 xAxis,s16 yAxis){x=xAxis;y=yAxis;}
+    void VelSetX(float xvel){xVel=xvel;}
+    void VelSetY(float yvel){yVel=yvel;}
+    void SetDebug(bool bDebug){bDebugInfo=bDebug;}
+    void FaceLeft(){bRightFaced=false;}
+    void FaceRight(){bRightFaced=true;}
 //Set the the ground value of the stage
-      void SetGroundValue(float yLimit){nGround=yLimit;} 
+    void SetGroundValue(float yLimit){nGround=yLimit;} 
       
 //Player Controllers
-      void ChangeState(s32 nSateNumber);
+    void ChangeState(s32 nSateNumber);
 
-	  void PlayAnim(s32 nAnimNo);
+	void PlayAnim(s32 nAnimNo);
       
 //trigger functions
-      char *GetCommand(){return strCommand;}
-      bool IsPlayerAlive(){return bAlive;}
-      s32  GetAnim(){return nAnimNumber;}
-      ActionElement *GetCurrAnim(){return m_SffManager.GetCurrAnimation();}
-      bool IsAnimAviable(s32 nAnim);
-      bool IsCtrl(){return bCtrl;}
-	  int GetParamValue(PARAMVALUES value) {return 20;}
+	char *GetCommand(){return strCommand;}
+	bool IsPlayerAlive(){return bAlive;}
+	s32  GetAnim(){return nAnimNumber;}
+	ActionElement *GetCurrAnim(){return m_SffManager.GetCurrAnimation();}
+	bool IsAnimAviable(s32 nAnim);
+	bool IsCtrl(){return bCtrl;}
+	float  GetParamValue(PARAMVALUES value);
 
 private:
-      bool CheckState(PLSTATE* tempState);
-      void ExecuteController(PLSTATE* tempState);
-      void HandleFSM();  
-      void HandlePhysic();
-      void UpDateFacing();
-      void Debug();
+    bool CheckState(PLSTATE* tempState);
+    void ExecuteController(PLSTATE* tempState);
+    void HandleFSM();  
+    void HandlePhysic();
+    void UpDateFacing();
+    void Debug();
 
 };
 

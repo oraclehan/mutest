@@ -1,4 +1,5 @@
 #include "global.h"
+#include "windows.h"
 
 FILE *pLogFile=NULL;
 
@@ -24,6 +25,8 @@ void PrintMessage(char *str,...)
   
    
   printf(string);
+  OutputDebugString(string);
+  OutputDebugString("\n");
   printf("\n");
 
 }

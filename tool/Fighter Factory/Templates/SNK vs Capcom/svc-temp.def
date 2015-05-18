@@ -1,0 +1,25 @@
+;=======================================;
+;           svc-temp by 187             ;
+;   Made with MUGEN Editing Ensemble    ;
+;     (http://ragnaroknemo.cjb.net)     ;
+;=======================================;
+
+[Info]
+name = "Template"
+displayname = "Template"
+author = "187"
+pal.defaults = 1
+
+[Files]
+cns = svc-temp.cns
+cmd = svc-temp.cmd
+stcommon = common1.cns
+sprite = svc-temp.sff
+anim = svc-temp.air
+st = svc-temp.st
+;st1 = 
+sound = svc-temp.snd
+pal1 = svc-temp01.act
+
+
+

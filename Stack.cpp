@@ -38,20 +38,19 @@ CStack::~CStack()
 
 void CStack::ResetStack()
 {
-    nPos=0;
-    memset(m_Stack,0,sizeof(m_Stack));
-
+	nPos=0;
+	memset(m_Stack,0,sizeof(m_Stack));
 }
 
 void CStack::Push(float nValue,char* strValue)
 {
-    if(nPos>STACKSIZE)
-        PrintMessage("CStack::Push Stack overflow");
-      
-      if(strValue!=NULL)
-        strcpy(m_Stack[nPos].string,strValue);
-      
-      m_Stack[nPos].Value=nValue;
+	if(nPos>STACKSIZE)
+		PrintMessage("CStack::Push Stack overflow============");
+
+	if(strValue!=NULL)
+		strcpy(m_Stack[nPos].string,strValue);
+
+	m_Stack[nPos].Value=nValue;
        
 #ifdef DEBUG
     PrintMessage("Push %f",nValue);
@@ -63,9 +62,7 @@ void CStack::Push(float nValue,char* strValue)
 Stacktype CStack::Pop()
 {
     if(nPos<0)
-        PrintMessage("CStack::Pop Stack underflow");
+        PrintMessage("CStack::Pop Stack underflow==========");
     
     return m_Stack[--nPos];
-
-
 }

@@ -1,0 +1,38 @@
+       ---- svc-temp ----
+-----------------
+This is a template character based on the SvC style of gameplay.
+Modified from Ragnarok and Kitsune's MEE template, it is pre-packaged
+with the following:
+
+- Maximum system
+- Exceed system
+- Guard Cancel system
+- Guard CounterAttack
+- Guard Crush system
+- Collapse state
+- Dizzy system
+- Extra anim groups for SvC custom states in air file.
+
+
+Feel free to use for your own purposes. Here are a few things you need
+to keep in mind:
+
+- View the example Dm and Exceed commands to see how to properly set
+the Maximum bar and exceed vars. 
+- The Cheese Kill only functions when you are beaten while blocking in
+a standing state. Mugen will treat being beat in air or while crouching
+as it normally does.
+- The dash's length is also determined by the animtime of the animation
+itself, as well as the run speed mentioned in the cns file.
+- For the enemy taunt to add power, they must use state 195 as their taunt
+state. Mind you, that is the same as KFM, and a very common one, but there
+are always a few exceptions.
+
+I'd like to thank the various people that have helped with the creation of
+this, from Orochi, Sander, and XGarg who helped directly with clearing up coding
+issues, to various betatesters From Dev and Rev who helped to point out
+what I had overlooked. All your help is greatly appreciated.
+
+-----------------
+In Rolento We Trust
+-----------------

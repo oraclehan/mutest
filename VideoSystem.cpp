@@ -52,7 +52,7 @@ bool CVideoSystem::InitSystem()
 {
     PrintMessage("CVideoSystem::InitSystem()");
      //Set Video mode and get main Surface   
-    screen=SDL_SetVideoMode(320,240,16,SDL_SWSURFACE|SDL_DOUBLEBUF);
+    screen=SDL_SetVideoMode(960,640,16,SDL_SWSURFACE|SDL_DOUBLEBUF);
     //Check the surface for validate
     if(screen==NULL)
     {
@@ -64,7 +64,7 @@ bool CVideoSystem::InitSystem()
     SDL_WM_SetCaption(OMTITLE,NULL);
     
     //Create the work surface
-    work=CreateSurface(320,240);
+    work=CreateSurface(960,640);
     SDL_FillRect(work,NULL,SDL_MapRGB(screen->format,255,0,255));
         
     //Set the frame manager to 60 Hz

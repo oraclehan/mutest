@@ -185,8 +185,9 @@ void CPlayer::ExecuteController(PLSTATE* tempState)
 	{
 		return;
 	}
-
-	m_ControllerExec.ExecuteController(tempState->nType);	
+	lpCurrState = tempState;
+	m_ControllerExec.ExecuteController(tempState->nType);
+	lpCurrState = nullptr;
 }
 
 //updates all interlal stuff of the player
@@ -325,5 +326,32 @@ bool CPlayer::IsAnimAviable(s32 nAnim)
      return false;
      else
      return true;
+}
+
+float CPlayer::GetParamValue( PARAMVALUES value )
+{
+// 	PA_VALUE=128,
+// 		PA_XVALUE,
+//		PA_YVALUE,
+//		PA_VAR,
+//		PA_FVAR,
+//		PA_SYSVAR,
+//		PA_SYSFVAR,
+	float ret = 0.0;
+	switch(value) {
+		case PA_VALUE:
+// 			if (lpCurrState) 
+// 			{
+// 				lpCurrState->
+// 			}
+			break;
+		case PA_XVALUE:
+			ret = xVel;
+			break;
+		case PA_YVALUE:
+			ret = yVel;
+			break;
+	}
+	return ret;
 }
 

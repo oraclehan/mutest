@@ -64,10 +64,10 @@ void CGame::InitGame()
                              m_SdlManager.GetVideoSystem(),
                              &m_Timer);
 	Uint16 sdlk_code[] = {
-		SDLK_UP,
-		SDLK_DOWN,
-		SDLK_LEFT,
-		SDLK_RIGHT,
+		SDLK_w,
+		SDLK_s,
+		SDLK_a,
+		SDLK_d,
 		SDLK_u,
 		SDLK_i,
 		SDLK_o,

@@ -7,6 +7,7 @@
 
 #include <sdl.h>
 
+
 //SDL_GFX libery
 
 
@@ -19,6 +20,8 @@
 #include <string.h>
 #include <malloc.h>
 #include <math.h>
+#include <map>
+#include <string>
 
 //using namespace std;
 
