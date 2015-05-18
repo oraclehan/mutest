@@ -340,10 +340,11 @@ float CPlayer::GetParamValue( PARAMVALUES value )
 	float ret = 0.0;
 	switch(value) {
 		case PA_VALUE:
-// 			if (lpCurrState) 
-// 			{
-// 				lpCurrState->
-// 			}
+ 			if (lpCurrState && lpCurrState->controller) 
+ 			{
+				CHANGEANIM * pAnim = (CHANGEANIM *)lpCurrState->controller;
+ 				ret = m_pVMachine->Execute(pAnim->value);
+ 			}
 			break;
 		case PA_XVALUE:
 			ret = xVel;
