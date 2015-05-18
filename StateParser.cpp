@@ -1152,6 +1152,7 @@ void CStateParser::ParserController(CTokenizer &tok,CStateManager &StateManager,
 
 void CStateParser::ParseVelSetState(CTokenizer &tok,CStateManager &StateManager)
 {
+	VELSET *temp=(VELSET*) m_pAlloc->Alloc(sizeof(VELSET));
 	while( !tok.CheckToken("[", false) && !tok.AtEndOfFile() )
 	{
 		StateManager.NewInst();
@@ -1161,13 +1162,15 @@ void CStateParser::ParseVelSetState(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);  
 
 			EvaluateExpression(tok,StateManager);
+			temp->x = StateManager.GetParamIns();
+
 		}else if( tok.CheckToken("x") )
 		{
 			if( !tok.CheckToken("=") )
 				Error("expected =",tok);
 
 			EvaluateExpression(tok,StateManager);  
-
+			temp->y = StateManager.GetParamIns();
 		}else if (tok.CheckToken("persistent") ) 
 		{
 			if( !tok.CheckToken("=") )
@@ -1177,6 +1180,7 @@ void CStateParser::ParseVelSetState(CTokenizer &tok,CStateManager &StateManager)
 		}
 	}
 
+	StateManager.SetController(temp);
 	StateManager.NewInst(); 
 }
 
@@ -1193,20 +1197,22 @@ void CStateParser::ParseChangeAnim(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);  
 
 			EvaluateExpression(tok,StateManager);
+			temp->value = StateManager.GetParamIns();
+			
 		}else if( tok.CheckToken("ctrl") )
 		{
 			if( !tok.CheckToken("=") )
 				Error("expected =",tok);
 
 			EvaluateExpression(tok,StateManager);  
-
+			temp->ctrl= StateManager.GetParamIns();
 		}else if ( tok.CheckToken("anim") )
 		{
 			if( !tok.CheckToken("=") )
 				Error("expected =",tok); 
 
 			EvaluateExpression(tok,StateManager); 
-
+			temp->anim = StateManager.GetParamIns();
 		}else if (tok.CheckToken("persistent"))
 		{
 			if( !tok.CheckToken("=") )
@@ -1215,39 +1221,41 @@ void CStateParser::ParseChangeAnim(CTokenizer &tok,CStateManager &StateManager)
 			EvaluateExpression(tok,StateManager); 
 		}            
 	}
-
+	StateManager.SetController(temp);
 	StateManager.NewInst(); 
 }
 
 void CStateParser::ParseChangeState(CTokenizer &tok,CStateManager &StateManager)
 {
-     CHANGESTATE *temp=(CHANGESTATE*) m_pAlloc->Alloc(sizeof(CHANGESTATE));
-     //TODO:Check for Required parameters and print error msg
-     while( !tok.CheckToken("[", false) && !tok.AtEndOfFile() )
-     {
-             StateManager.NewInst();
-            if( tok.CheckToken("value") )
-            {
-                if( !tok.CheckToken("=") )
-                  Error("expected =",tok);  
+	CHANGESTATE *temp=(CHANGESTATE*) m_pAlloc->Alloc(sizeof(CHANGESTATE));
+	//TODO:Check for Required parameters and print error msg
+	while( !tok.CheckToken("[", false) && !tok.AtEndOfFile() )
+	{
+		StateManager.NewInst();
+		if( tok.CheckToken("value") )
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok);  
                           
-                EvaluateExpression(tok,StateManager);
-            }else if( tok.CheckToken("ctrl") )
-            {
-                if( !tok.CheckToken("=") )
-                  Error("expected =",tok);
+			EvaluateExpression(tok,StateManager);
+			temp->value = StateManager.GetParamIns();
+		}else if( tok.CheckToken("ctrl") )
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok);
 
-                 EvaluateExpression(tok,StateManager);  
+			EvaluateExpression(tok,StateManager);  
+            temp->ctrl = StateManager.GetParamIns();      
+		}else if ( tok.CheckToken("anim") )
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok); 
                   
-            }else if ( tok.CheckToken("anim") )
-            {
-                 if( !tok.CheckToken("=") )
-                  Error("expected =",tok); 
+			EvaluateExpression(tok,StateManager); 
+			temp->anim = StateManager.GetParamIns();    
                   
-                 EvaluateExpression(tok,StateManager); 
-                  
-            }            
-     }
-
-      StateManager.NewInst(); 
+		}            
+	}
+	StateManager.SetController(temp);
+	StateManager.NewInst(); 
 }

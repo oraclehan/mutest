@@ -157,10 +157,10 @@ void CControllerExecuter::ChangeState()
 //Change Anim controller
 void CControllerExecuter::ChangeAnim()
 {
-	int nStateToChange;
+	int nAnimNO;
 	//Get the Statenumber to wich it will be changed
-	nStateToChange=(int)((CPlayer*)m_pPlayer1)->GetParamValue(PA_VALUE);
-	((CPlayer*)m_pPlayer1)->PlayAnim(0);
+	nAnimNO=(int)((CPlayer*)m_pPlayer1)->GetParamValue(PA_VALUE);
+	((CPlayer*)m_pPlayer1)->PlayAnim(nAnimNO);
 }
 
 //VelSet controller

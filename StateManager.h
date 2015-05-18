@@ -86,6 +86,9 @@ public:
 	
 	bool IsStateDefAviable(s32 nStateDefNum);
 
+	INSTRUCTION * GetParamIns();
+	void SetController(void *controller);
+
 private:
 	INSTRUCTION pInst[200];
 	PLSTATEDEF *lpStateDefList;

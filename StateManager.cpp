@@ -472,3 +472,19 @@ void CStateManager::ExchangeIns()
     memcpy(&pInst[nCurrInst-2],&temp,sizeof(temp));
 
 }
+
+INSTRUCTION * CStateManager::GetParamIns()
+{   
+
+	INSTRUCTION * newIns = (INSTRUCTION *)m_pAlloc->Alloc(sizeof(INSTRUCTION)* (nCurrInst+1));
+
+	pInst[nCurrInst].n_OpCode = OP_STOP;
+	memcpy(newIns,pInst,sizeof(INSTRUCTION)*(nCurrInst+1));
+
+	return newIns;
+}
+
+void CStateManager::SetController( void *controller )
+{
+	lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1].controller = controller;
+}
