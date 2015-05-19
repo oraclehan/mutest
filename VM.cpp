@@ -150,7 +150,7 @@ void CVirtualMachine::InitFunctTable()
    pFuncTable[103]=&CVirtualMachine::PalNo;
    pFuncTable[104]=&CVirtualMachine::ParentDist;
    pFuncTable[105]=&CVirtualMachine::Pi;
-   pFuncTable[106]=&CVirtualMachine::Pos;
+   pFuncTable[106]=&CVirtualMachine::Power;
    pFuncTable[107]=&CVirtualMachine::Power;
    pFuncTable[108]=&CVirtualMachine::PowerMax;
    pFuncTable[109]=0;//PlayerIDExist
@@ -169,9 +169,9 @@ void CVirtualMachine::InitFunctTable()
    pFuncTable[122]=&CVirtualMachine::RoundState;
    pFuncTable[123]=&CVirtualMachine::ScreenPos;
    pFuncTable[124]=&CVirtualMachine::SelfAnimExist;
-   pFuncTable[125]=&CVirtualMachine::Sin;
-   pFuncTable[126]=&CVirtualMachine::StateNo;
-   pFuncTable[127]=&CVirtualMachine::StateType;
+   pFuncTable[125]=&CVirtualMachine::StateNo;
+   pFuncTable[126]=&CVirtualMachine::StateType;
+   pFuncTable[127]=&CVirtualMachine::StateTime;
    pFuncTable[128]=&CVirtualMachine::SysFVar;
    pFuncTable[129]=&CVirtualMachine::SysVar;
    pFuncTable[130]=&CVirtualMachine::Tan;
@@ -1639,7 +1639,8 @@ void CVirtualMachine::Pos()
 
 void CVirtualMachine::Power()
 {
-  //  m_Stack.Push((float)m_pPlayer1->PlRtInfo.nLevelPower,"#");
+   //m_Stack.Push((float)m_pPlayer1->PlRtInfo.nLevelPower,"#");
+	m_Stack.Push(100,"#");
 }
 
 void CVirtualMachine::PowerMax()
@@ -1727,12 +1728,17 @@ void CVirtualMachine::Sin()
 
 void CVirtualMachine::StateNo()
 {
-    //m_Stack.Push((float)m_pPlayer1->PlRtInfo.nState,"#");
+	m_Stack.Push((float)m_pPlayer1->lpCurrStatedef->StateNumber,"#");
 }
 
 void CVirtualMachine::StateType()
 {
-  //  m_Stack.Push((float)m_pPlayer1->PlRtInfo.nStateTyp,"#");
+    m_Stack.Push((float)m_pPlayer1->nStateType,"#");
+}
+
+void CVirtualMachine::StateTime()
+{
+	m_Stack.Push((float)m_pPlayer1->nStateTime,"#");
 }
 
 void CVirtualMachine::SysFVar()

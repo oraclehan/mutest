@@ -522,10 +522,11 @@ void CStateManager::AddTriggerToState(u8 nType)
 			index++;
 		}
 
-		lastTrigger->pInts = (INSTRUCTION*)m_pAlloc->Realloc(lastTrigger->pInts, sizeof(INSTRUCTION)* (index + nCurrInst + 1));
+		lastTrigger->pInts = (INSTRUCTION*)m_pAlloc->Realloc(lastTrigger->pInts, sizeof(INSTRUCTION)* (index + nCurrInst + 2));
 		memcpy(lastTrigger->pInts + index,
 			pInst,sizeof(INSTRUCTION)*(nCurrInst));
-		lastTrigger->pInts[index + nCurrInst].n_OpCode = OP_STOP;
+		lastTrigger->pInts[index + nCurrInst].n_OpCode = OP_AND;
+		lastTrigger->pInts[index + nCurrInst + 1].n_OpCode = OP_STOP;
 	}else
 	{
     

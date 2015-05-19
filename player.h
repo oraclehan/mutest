@@ -25,6 +25,7 @@
 
 class CPlayer
 {
+public:
 	CAllocater         *m_pAlloc;
 	CVideoSystem       *m_pVideoSystem;
 	CSffManager         m_SffManager;
