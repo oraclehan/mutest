@@ -190,6 +190,11 @@ void CStateManager::Reset()
      nCurrInst=0;
      lpStateDefList=(PLSTATEDEF*)m_pAlloc->Alloc(sizeof(PLSTATEDEF)*nTotalStateDefSize);
      nCurrTrigger=0;
+
+	 for (u16 index =0; index < 3 ; index++)
+	 {
+		 lpStateDefSpec[index] = (PLSTATEDEF*)m_pAlloc->Alloc(sizeof(PLSTATEDEF));
+	 }
 }
 
 void CStateManager::ReallocStatedef(u16 index)
@@ -232,6 +237,10 @@ void CStateManager::AddStateDef(s32 nStateDefNum)
 {
 //    PrintMessage("AddStateDef %i",nStateDefNum);
 
+	if (nStateDefNum < 0 )
+	{
+
+	}
 	if (-1 == nStateDefNum)
 	{
 		int a;
@@ -261,8 +270,7 @@ void CStateManager::AddStateDef(s32 nStateDefNum)
      
      //Set default values
      SetDefaultStatedef();
-     
-
+    
 }
 
 void CStateManager::SetStateDefType(u8 nType)
@@ -432,21 +440,36 @@ void CStateManager::AddTriggerToState(u8 nType)
         
     //First lets copy the instruction to the trigger
     //Create a new instance to store the instruction
+	if (nCurrTrigger > 0 && lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1].triggers[nCurrTrigger-1].nTriggerType == nType)
+	{
+		PLTRIGGER *lastTrigger = &lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1].triggers[nCurrTrigger -1];
+		u16 index = 0;
+		while (lastTrigger->pInts[index].n_OpCode != OP_STOP)
+		{
+			index++;
+		}
+
+		lastTrigger->pInts = (INSTRUCTION*)m_pAlloc->Realloc(lastTrigger->pInts, sizeof(INSTRUCTION)* (index + nCurrInst + 1));
+		memcpy(lastTrigger->pInts + index,
+			pInst,sizeof(INSTRUCTION)*(nCurrInst));
+		lastTrigger->pInts[index + nCurrInst].n_OpCode = OP_STOP;
+	}else
+	{
     
-    lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1].triggers[nCurrTrigger].nTriggerType=nType;
-    lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1].triggers[nCurrTrigger].pInts=(INSTRUCTION*)m_pAlloc->Alloc(sizeof(INSTRUCTION)* (nCurrInst+1));
+		lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1].triggers[nCurrTrigger].nTriggerType=nType;
+		lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1].triggers[nCurrTrigger].pInts=(INSTRUCTION*)m_pAlloc->Alloc(sizeof(INSTRUCTION)* (nCurrInst+1));
     
-	pInst[nCurrInst].n_OpCode = OP_STOP;
-    memcpy(lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1].triggers[nCurrTrigger].pInts,
-           pInst,sizeof(INSTRUCTION)*(nCurrInst+1));
+		pInst[nCurrInst].n_OpCode = OP_STOP;
+		memcpy(lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1].triggers[nCurrTrigger].pInts,
+			   pInst,sizeof(INSTRUCTION)*(nCurrInst+1));
            
-    nCurrTrigger++;
+		nCurrTrigger++;
            
-    lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1].nHowManyTriggers=nCurrTrigger;
+		lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1].nHowManyTriggers=nCurrTrigger;
+	}
            
-    nCurrInst=0;
-    
-        
+	nCurrInst=0;
+ 
 }
 
 
