@@ -101,6 +101,8 @@ private:
 	u16 nCurrInst;
 	u16 nCurrParamInst;
 	u16 nCurrParam;
+
+	PLSTATEDEF *lpStateDefSpec[3];
 	
 	bool bParam;
 

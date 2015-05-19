@@ -18,6 +18,7 @@ public:
     const char* GetToken();
     bool        GetToken( char* destString, int maxLength );
     bool        CheckToken( const char* stringToLookFor, bool consumeIfMatch = true );
+	bool		CheckTokenLike( const char* stringToLookFor, bool consumeIfMatch );
     bool        CheckTokenIsNumber();       // returns true if token is a number
     bool        CheckTokenIsQuotedString();  // makes sure token is quoted string
     

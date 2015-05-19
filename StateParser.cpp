@@ -284,6 +284,7 @@ static char * strTriggerType[] = {
   "Sin",
   "StateNo",
   "StateType",
+  "StateTime",
   "SysFVar",
   "SysVar",
   "Tan",
@@ -395,247 +396,247 @@ void CStateParser::ParseStateFile(const char* strFileName,CStateManager &StateMa
 
 void CStateParser::ParseStateDef(CTokenizer &tok,CStateManager &StateManager)
 {
-while( !tok.CheckToken("[",false) && !tok.AtEndOfFile() )
-{
-     //parse state type
-     if( tok.CheckToken("type") )
-     {
-         if( !tok.CheckToken("=") )
-            Error("expected =",tok);
+	while( !tok.CheckToken("[",false) && !tok.AtEndOfFile() )
+	{
+		//parse state type
+		if( tok.CheckToken("type") )
+		{
+			if( !tok.CheckToken("=") )
+			Error("expected =",tok);
          
-         //to get a single char   
-         char c=tok.GetToken()[0];
-         //make sure we use uperchars
-         if(c >= 97)
-            c-=32;
+			//to get a single char   
+			char c=tok.GetToken()[0];
+			//make sure we use uperchars
+			if(c >= 97)
+			c-=32;
             
                   
-         switch(c)
-         {
-            case 'S':
-             StateManager.SetStateDefType(stand); 
-            break;
+			switch(c)
+			{
+			case 'S':
+				StateManager.SetStateDefType(stand); 
+			break;
             
-            case 'C':
-             StateManager.SetStateDefType(crouch);     
-            break;
+			case 'C':
+				StateManager.SetStateDefType(crouch);     
+			break;
                         
-            case 'A':
-             StateManager.SetStateDefType(air); 
-            break;
+			case 'A':
+				StateManager.SetStateDefType(air); 
+			break;
             
-            case 'L':
-             StateManager.SetStateDefType(liedown);     
-            break;
+			case 'L':
+				StateManager.SetStateDefType(liedown);     
+			break;
             
-            case 'U':
-             StateManager.SetStateDefType(untouch);    
-            break;
+			case 'U':
+				StateManager.SetStateDefType(untouch);    
+			break;
             
-            default:
-              Error("Unknown statetype",tok);
-            break;
+			default:
+				Error("Unknown statetype",tok);
+			break;
                       
                   
-         }
+			}
 
-     } else if( tok.CheckToken("movetype") )
-     {
-         if( !tok.CheckToken("=") )
-            Error("expected '=' in line ",tok);
+		} else if( tok.CheckToken("movetype") )
+		{
+			if( !tok.CheckToken("=") )
+			Error("expected '=' in line ",tok);
             
-         //to get a single char   
-         char c=tok.GetToken()[0];
-         //make sure we use uperchars
-         if(c >= 97)
-            c-=32;
+			//to get a single char   
+			char c=tok.GetToken()[0];
+			//make sure we use uperchars
+			if(c >= 97)
+			c-=32;
            
-         switch(c)
-         {
-            case 'A':
-             StateManager.SetStateMoveType(attack);
-            break;
+			switch(c)
+			{
+			case 'A':
+				StateManager.SetStateMoveType(attack);
+			break;
 
-            case 'I':
-             StateManager.SetStateMoveType(idle);
-            break;
+			case 'I':
+				StateManager.SetStateMoveType(idle);
+			break;
 
-            case 'H':
-             StateManager.SetStateMoveType(hit);
-            break;
+			case 'H':
+				StateManager.SetStateMoveType(hit);
+			break;
 
-            case 'U':
-             StateManager.SetStateMoveType(untouch);
-            break;
+			case 'U':
+				StateManager.SetStateMoveType(untouch);
+			break;
             
-            default:
-              Error("Unknown movetype",tok);
-            break;
+			default:
+				Error("Unknown movetype",tok);
+			break;
             
                   
                   
-         }      
+			}      
            
               
          
-     } else if( tok.CheckToken("physics") )
-     {
-         if( !tok.CheckToken("=") )
-            Error("expected =",tok);
+		} else if( tok.CheckToken("physics") )
+		{
+			if( !tok.CheckToken("=") )
+			Error("expected =",tok);
          
-         //to get a single char   
-         char c=tok.GetToken()[0];
-         //make sure we use uperchars
-         if(c >= 97)
-            c-=32;
+			//to get a single char   
+			char c=tok.GetToken()[0];
+			//make sure we use uperchars
+			if(c >= 97)
+			c-=32;
             
                   
-         switch(c)
-         {
-            case 'S':
-             StateManager.SetStatePhysicType(stand); 
-            break;
+			switch(c)
+			{
+			case 'S':
+				StateManager.SetStatePhysicType(stand); 
+			break;
             
-            case 'C':
-             StateManager.SetStatePhysicType(crouch);     
-            break;
+			case 'C':
+				StateManager.SetStatePhysicType(crouch);     
+			break;
                         
-            case 'A':
-             StateManager.SetStatePhysicType(air); 
-            break;
+			case 'A':
+				StateManager.SetStatePhysicType(air); 
+			break;
             
-            case 'N':
-             StateManager.SetStatePhysicType(none);     
-            break;
+			case 'N':
+				StateManager.SetStatePhysicType(none);     
+			break;
             
-            case 'U':
-             StateManager.SetStatePhysicType(untouch);    
-            break;
+			case 'U':
+				StateManager.SetStatePhysicType(untouch);    
+			break;
             
-             default:
-              Error("Unknown physic type",tok);
-            break;
+				default:
+				Error("Unknown physic type",tok);
+			break;
                       
                   
-         }
+			}
             
             
             
-     } else if( tok.CheckToken("anim") )
-     {
-        if( !tok.CheckToken("=") )
-            Error("expected =",tok);
+		} else if( tok.CheckToken("anim") )
+		{
+		if( !tok.CheckToken("=") )
+			Error("expected =",tok);
          
-         if(!tok.CheckTokenIsNumber())
-           Error("Expected a number for anim",tok);
+			if(!tok.CheckTokenIsNumber())
+			Error("Expected a number for anim",tok);
            
-         StateManager.SetStateAnim(tok.GetInt());  
+			StateManager.SetStateAnim(tok.GetInt());  
       
             
-     } else if( tok.CheckToken("velset") )
-     {
-       if( !tok.CheckToken("=") )
-            Error("expected =",tok);
+		} else if( tok.CheckToken("velset") )
+		{
+		if( !tok.CheckToken("=") )
+			Error("expected =",tok);
             
-       float x=tok.GetFloat();
+		float x=tok.GetFloat();
        
-       if( !tok.CheckToken(",") )
-          Error("expected ,",tok);
+		if( !tok.CheckToken(",") )
+			Error("expected ,",tok);
           
-       float y=tok.GetFloat();
+		float y=tok.GetFloat();
        
-       StateManager.SetVelSet(x,y);     
+		StateManager.SetVelSet(x,y);     
 
-     } else if( tok.CheckToken("ctrl") )
-     {
-         if( !tok.CheckToken("=") )
-            Error("expected =",tok);
+		} else if( tok.CheckToken("ctrl") )
+		{
+			if( !tok.CheckToken("=") )
+			Error("expected =",tok);
                                  
-         if(!tok.CheckTokenIsNumber())
-          Error("Expected a number for ctrl",tok);
+			if(!tok.CheckTokenIsNumber())
+			Error("Expected a number for ctrl",tok);
             
-          StateManager.SetStateCtrl(tok.GetInt());    
+			StateManager.SetStateCtrl(tok.GetInt());    
             
-     } else if( tok.CheckToken("poweradd") )
-     {
-        if( !tok.CheckToken("=") )
-            Error("expected =",tok);
+		} else if( tok.CheckToken("poweradd") )
+		{
+		if( !tok.CheckToken("=") )
+			Error("expected =",tok);
             
-        if(!tok.CheckTokenIsNumber())
-           Error("Expected a number for poweradd",tok);      
+		if(!tok.CheckTokenIsNumber())
+			Error("Expected a number for poweradd",tok);      
             
-        StateManager.SetStatePowerAdd(tok.GetInt());  
+		StateManager.SetStatePowerAdd(tok.GetInt());  
             
-     } else if( tok.CheckToken("juggle") )
-     {
-        if( !tok.CheckToken("=") )
-            Error("expected =",tok);
+		} else if( tok.CheckToken("juggle") )
+		{
+		if( !tok.CheckToken("=") )
+			Error("expected =",tok);
             
-        if(!tok.CheckTokenIsNumber())
-           Error("Expected a number for juggle",tok);
+		if(!tok.CheckTokenIsNumber())
+			Error("Expected a number for juggle",tok);
            
-       StateManager.SetStateJuggle(tok.GetInt());              
+		StateManager.SetStateJuggle(tok.GetInt());              
             
-     } else if( tok.CheckToken("facep2") )
-     {
-        if( !tok.CheckToken("=") )
-            Error("expected =",tok);
+		} else if( tok.CheckToken("facep2") )
+		{
+		if( !tok.CheckToken("=") )
+			Error("expected =",tok);
             
-        if( !tok.CheckTokenIsNumber() )
-            Error("Expected a number for facep2",tok);
+		if( !tok.CheckTokenIsNumber() )
+			Error("Expected a number for facep2",tok);
             
-        StateManager.SetStateFaceP2(tok.GetInt());   
+		StateManager.SetStateFaceP2(tok.GetInt());   
             
-     } else if( tok.CheckToken("hitdefpersist") )
-     {
-        if( !tok.CheckToken("=") )
-            Error("expected =",tok);
+		} else if( tok.CheckToken("hitdefpersist") )
+		{
+		if( !tok.CheckToken("=") )
+			Error("expected =",tok);
             
-        if( !tok.CheckTokenIsNumber() )
-            Error("Expected a number for hitdefpersist",tok); 
+		if( !tok.CheckTokenIsNumber() )
+			Error("Expected a number for hitdefpersist",tok); 
             
-        StateManager.SetStateHitDefPresit(tok.GetInt());   
+		StateManager.SetStateHitDefPresit(tok.GetInt());   
             
-     } else if( tok.CheckToken("movehitpersist") )
-     {
-        if( !tok.CheckToken("=") )
-            Error("expected =",tok);
+		} else if( tok.CheckToken("movehitpersist") )
+		{
+		if( !tok.CheckToken("=") )
+			Error("expected =",tok);
             
-        if( !tok.CheckTokenIsNumber() )
-            Error("Expected a number for movehitpersist",tok);
+		if( !tok.CheckTokenIsNumber() )
+			Error("Expected a number for movehitpersist",tok);
             
-        StateManager.SetMoveHitPresit(tok.GetInt());  
+		StateManager.SetMoveHitPresit(tok.GetInt());  
             
-     } else if( tok.CheckToken("hitcountpersist") )
-     { 
-        if( !tok.CheckToken("=") )
-            Error("expected =",tok);
+		} else if( tok.CheckToken("hitcountpersist") )
+		{ 
+		if( !tok.CheckToken("=") )
+			Error("expected =",tok);
             
-        if( !tok.CheckTokenIsNumber() )
-            Error("Expected a number for hitcountpersist",tok);
+		if( !tok.CheckTokenIsNumber() )
+			Error("Expected a number for hitcountpersist",tok);
             
-        StateManager.SetStateHitCounterPresit(tok.GetInt());  
+		StateManager.SetStateHitCounterPresit(tok.GetInt());  
             
             
-     } else if( tok.CheckToken("sprpriority") )
-     {
-         if( !tok.CheckToken("=") )
-            Error("expected =",tok); 
+		} else if( tok.CheckToken("sprpriority") )
+		{
+			if( !tok.CheckToken("=") )
+			Error("expected =",tok); 
             
-         if( !tok.CheckTokenIsNumber() )
-            Error("Expected a number for sprpriority",tok);
+			if( !tok.CheckTokenIsNumber() )
+			Error("Expected a number for sprpriority",tok);
             
-         StateManager.SetSprPriority(tok.GetInt()); 
+			StateManager.SetSprPriority(tok.GetInt()); 
             
-     }else //faile in statedef
-     {
+		}else //faile in statedef
+		{
          
-          throw(CError("Unknown token at line %s",tok.GetToken()));
-          break;
-     }
+			throw(CError("Unknown token at line %s",tok.GetToken()));
+			break;
+		}
      
 
-}
+	}
     
 }
 
@@ -653,17 +654,28 @@ void CStateParser::PareseState(CTokenizer &tok,CStateManager &StateManager)
 		   nController=GetControllerType(ret.c_str(),tok );
       
         
-		} else if ( tok.CheckToken("triggerall") )
+		} else if ( tok.CheckTokenLike("trigger", false) )
 		{
+			std::string trigger = tok.GetToken();
+
 			if( !tok.CheckToken("=") )
 			   Error("expected =",tok);
          
 			//fix me add triggerall
 		
 			ParseTrigger(tok,StateManager);
-			StateManager.AddTriggerToState(0);
+			if (trigger.compare("triggerall") == 0)
+			{
+				StateManager.AddTriggerToState(TRIGGERALL);
+			}
+			else
+			{
+				//解析出是哪个trigger
+				std::string value = trigger.substr(strlen("trigger"), trigger.length() - strlen("trigger"));
+				StateManager.AddTriggerToState(atoi(value.c_str()));
+			}
 
-		}else  if( tok.CheckToken("trigger1") 
+		}/*else  if( tok.CheckToken("trigger1") 
 					||  tok.CheckToken("trigger2")
 					||  tok.CheckToken("trigger3")
 					||  tok.CheckToken("trigger4")
@@ -687,8 +699,8 @@ void CStateParser::PareseState(CTokenizer &tok,CStateManager &StateManager)
 			if( !tok.CheckToken("=") )
 				Error("expected =",tok);
 			ParseTrigger(tok,StateManager);
-			StateManager.AddTriggerToState(1);
-		}
+			StateManager.AddTriggerToState(TRIGGERNUM);
+		}*/
 		else break;
     
 
@@ -1071,10 +1083,48 @@ void CStateParser::Primary(CTokenizer &tok,CStateManager &StateManager)
 		 }
 		 else if (i == OP_StateType - OP_Abs)
 		 {
-			 if (!tok.CheckToken("="))
-				 Error("Missing =",tok);
-			 StateManager.AddInstruction(OP_StateType,0,tok.GetToken());
+			 if (tok.CheckToken("="))
+			 {
+				 StateManager.AddInstruction(OP_StateType,0,"#");
+				 StateManager.AddInstruction(OP_PUSH,0,tok.GetToken());
+				 StateManager.AddInstruction(OP_EQUAL,0,"#");
+			 }else if (tok.CheckToken("!="))
+			 {
+				 StateManager.AddInstruction(OP_StateType,0,"#");
+				 StateManager.AddInstruction(OP_PUSH,0,tok.GetToken());
+				 StateManager.AddInstruction(OP_NOTEQUAL,0,"#");
+			 }
 			 
+		 }
+		 else if (i == OP_P2StateType - OP_Abs)
+		 {
+			 if (tok.CheckToken("="))
+			 {
+				 StateManager.AddInstruction(OP_P2StateType,0,"#");
+				 StateManager.AddInstruction(OP_PUSH,0,tok.GetToken());
+				 StateManager.AddInstruction(OP_EQUAL,0,"#");
+			 }else if (tok.CheckToken("!="))
+			 {
+				 StateManager.AddInstruction(OP_P2StateType,0,"#");
+				 StateManager.AddInstruction(OP_PUSH,0,tok.GetToken());
+				 StateManager.AddInstruction(OP_NOTEQUAL,0,"#");
+			 }
+
+		 }
+		 else if (i == OP_P2MoveType - OP_Abs)
+		 {
+			 if (tok.CheckToken("="))
+			 {
+				 StateManager.AddInstruction(OP_P2MoveType,0,"#");
+				 StateManager.AddInstruction(OP_PUSH,0,tok.GetToken());
+				 StateManager.AddInstruction(OP_EQUAL,0,"#");
+			 }else if (tok.CheckToken("!="))
+			 {
+				 StateManager.AddInstruction(OP_P2MoveType,0,"#");
+				 StateManager.AddInstruction(OP_PUSH,0,tok.GetToken());
+				 StateManager.AddInstruction(OP_NOTEQUAL,0,"#");
+			 }
+
 		 }
 		 else if (i == OP_GetHitVar - OP_Abs)
 		 {
@@ -1083,6 +1133,16 @@ void CStateParser::Primary(CTokenizer &tok,CStateManager &StateManager)
 			 StateManager.AddInstruction(OP_GetHitVar,0,tok.GetToken());
 			 if (!tok.CheckToken(")"))
 				 Error("Missing )",tok);
+		 }
+		 else if (i == OP_HitDefAttr - OP_Abs)
+		 {
+			 while (!tok.AtEndOfLine())
+				 tok.GetToken();
+		 }
+		 else if (i == OP_P2BodyDist - OP_Abs)
+		 {
+			 while (!tok.AtEndOfLine())
+				 tok.GetToken();
 		 }
 		 else
 		 {
@@ -1219,7 +1279,21 @@ void CStateParser::ParseChangeAnim(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok); 
 
 			EvaluateExpression(tok,StateManager); 
-		}            
+		} 
+		else if (tok.CheckToken("elem"))
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok); 
+
+			EvaluateExpression(tok,StateManager); 
+		}  
+		else if (tok.CheckToken("ignorehitpause"))
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok); 
+
+			EvaluateExpression(tok,StateManager); 
+		}  
 	}
 	StateManager.SetController(temp);
 	StateManager.NewInst(); 

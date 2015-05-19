@@ -39,22 +39,22 @@ trigger1 = Anim != 0 && Anim != 5
 trigger2 = Anim = 5 && AnimTime = 0 ;Turn anim over
 value = 0
 
-;[State 0, 2]
-;type = VelSet
-;trigger1 = Time = 0
-;y = 0
+[State 0, 2]
+type = VelSet
+trigger1 = Time = 0
+y = 0
 
-;[State 0, 3] ;Stop moving if low velocity or 4 ticks pass
-;type = VelSet
-;trigger1 = abs(vel x) < Const(movement.stand.friction.threshold)
-;trigger2 = Time = 4
-;x = 0
+[State 0, 3] ;Stop moving if low velocity or 4 ticks pass
+type = VelSet
+trigger1 = abs(vel x) < 2;Const(movement.stand.friction.threshold)
+trigger2 = Time = 4
+x = 0
 
-;[State 0, 4] ;Are you dead?
-;type = ChangeState
-;trigger1 = !alive
-;value = 5050
-;ctrl = 0
+[State 0, 4] ;Are you dead?
+type = ChangeState
+trigger1 = !alive
+value = 5050
+ctrl = 0
 
 ;---------------------------------------------------------------------------
 ; Stand to Crouch
@@ -70,7 +70,7 @@ x = .75
 
 [State 10, 2] ;Stop moving if low velocity
 type = VelSet
-trigger1 = abs(vel x) < Const(movement.crouch.friction.threshold)
+trigger1 = abs(vel x) < 2;Const(movement.crouch.friction.threshold)
 x = 0
 
 [State 10, 3]
@@ -93,7 +93,7 @@ value = 11
 
 [State 11, 2] ;Stop moving if low velocity
 type = VelSet
-trigger1 = abs(vel x) < Const(movement.crouch.friction.threshold)
+trigger1 = abs(vel x) < 2;Const(movement.crouch.friction.threshold)
 x = 0
 
 ;---------------------------------------------------------------------------
