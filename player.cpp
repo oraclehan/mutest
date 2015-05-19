@@ -28,23 +28,23 @@ instace which will be a copy of its parent
 
 CPlayer::CPlayer()
 {
- bRightFaced=true;
- bAlive=true;
- bDebugInfo=false;
- bHitDefPresit=false;
- bHitCounterPresit=false;
- bMoveHitPresit=false;
- bHitDef=false;
- nLife=1000;
- nPower=1000;
- nStateTime=0;
- nStateType=0;
- nPhysic=0;
- nMoveType=0;
- x=y=0;
- xVel=0;
- yVel=0;
- m_ControllerExec.SetPlayer(this);
+	bRightFaced=true;
+	bAlive=true;
+	bDebugInfo=false;
+	bHitDefPresit=false;
+	bHitCounterPresit=false;
+	bMoveHitPresit=false;
+	bHitDef=false;
+	nLife=1000;
+	nPower=1000;
+	nStateTime=0;
+	nStateType=0;
+	nPhysic=0;
+	nMoveType=0;
+	x=y=0;
+	xVel=0;
+	yVel=0;
+	m_ControllerExec.SetPlayer(this);
 }
 
 CPlayer::~CPlayer()
@@ -120,12 +120,26 @@ Handles the FSM of the player
 */
 void CPlayer::HandleFSM()
 {
-     //check every state in this statedef
-     for(u16 i=0;i < lpCurrStatedef->nHowManyState; i++)
-     {
-        if( CheckState(&lpCurrStatedef->lpState[i]) )
-           ExecuteController(&lpCurrStatedef->lpState[i]);           
-     }
+	//execute -3 .. -1 state
+	for (int index = -3; index < 0; index++)
+	{
+		PLSTATEDEF *tmpStateDef = m_StateManager.GetStateDef(index);
+		if (tmpStateDef)
+		{
+			for(u16 i=0;i < tmpStateDef->nHowManyState; i++)
+			{
+				if( CheckState(&tmpStateDef->lpState[i]) )
+					ExecuteController(&tmpStateDef->lpState[i]);           
+			}
+		}
+	}
+
+	//check every state in this statedef
+	for(u16 i=0;i < lpCurrStatedef->nHowManyState; i++)
+	{
+		if( CheckState(&lpCurrStatedef->lpState[i]) )
+			ExecuteController(&lpCurrStatedef->lpState[i]);           
+	}
         
 }
 /*
@@ -351,6 +365,18 @@ float CPlayer::GetParamValue( PARAMVALUES value )
 			ret = xVel;
 			break;
 		case PA_YVALUE:
+			ret = yVel;
+			break;
+		case PA_VAR:
+			ret = yVel;
+			break;
+		case PA_FVAR:
+			ret = yVel;
+			break;
+		case PA_SYSVAR:
+			ret = yVel;
+			break;
+		case PA_SYSFVAR:
 			ret = yVel;
 			break;
 	}
