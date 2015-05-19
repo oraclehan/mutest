@@ -338,6 +338,7 @@ enum OPCODES
 	OP_Sin,
 	OP_StateNo,
 	OP_StateType,
+	OP_StateTime,
 	OP_SysFVar,
 	OP_SysVar,
 	OP_Tan,
@@ -389,7 +390,7 @@ struct INSTRUCTION
 
 enum TRIGGERNO
 {
-	TRIGGERALL,
+	TRIGGERALL = 0,
 	TRIGGERNUM,
 };
 
@@ -610,6 +611,8 @@ struct CHANGEANIM
 	INSTRUCTION *value;
 	INSTRUCTION *ctrl;
 	INSTRUCTION *anim;
+	INSTRUCTION *ignorePause;
+	INSTRUCTION *elem;
 };
 
 struct VELSET

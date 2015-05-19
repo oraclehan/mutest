@@ -284,6 +284,7 @@ static char * strTriggerType[] = {
   "Sin",
   "StateNo",
   "StateType",
+  "StateTime",
   "SysFVar",
   "SysVar",
   "Tan",
@@ -653,17 +654,28 @@ void CStateParser::PareseState(CTokenizer &tok,CStateManager &StateManager)
 		   nController=GetControllerType(ret.c_str(),tok );
       
         
-		} else if ( tok.CheckToken("triggerall") )
+		} else if ( tok.CheckTokenLike("trigger", false) )
 		{
+			std::string trigger = tok.GetToken();
+
 			if( !tok.CheckToken("=") )
 			   Error("expected =",tok);
          
 			//fix me add triggerall
 		
 			ParseTrigger(tok,StateManager);
-			StateManager.AddTriggerToState(0);
+			if (trigger.compare("triggerall") == 0)
+			{
+				StateManager.AddTriggerToState(TRIGGERALL);
+			}
+			else
+			{
+				//解析出是哪个trigger
+				std::string value = trigger.substr(strlen("trigger"), trigger.length() - strlen("trigger"));
+				StateManager.AddTriggerToState(atoi(value.c_str()));
+			}
 
-		}else  if( tok.CheckToken("trigger1") 
+		}/*else  if( tok.CheckToken("trigger1") 
 					||  tok.CheckToken("trigger2")
 					||  tok.CheckToken("trigger3")
 					||  tok.CheckToken("trigger4")
@@ -687,8 +699,8 @@ void CStateParser::PareseState(CTokenizer &tok,CStateManager &StateManager)
 			if( !tok.CheckToken("=") )
 				Error("expected =",tok);
 			ParseTrigger(tok,StateManager);
-			StateManager.AddTriggerToState(1);
-		}
+			StateManager.AddTriggerToState(TRIGGERNUM);
+		}*/
 		else break;
     
 
@@ -1071,10 +1083,48 @@ void CStateParser::Primary(CTokenizer &tok,CStateManager &StateManager)
 		 }
 		 else if (i == OP_StateType - OP_Abs)
 		 {
-			 if (!tok.CheckToken("="))
-				 Error("Missing =",tok);
-			 StateManager.AddInstruction(OP_StateType,0,tok.GetToken());
+			 if (tok.CheckToken("="))
+			 {
+				 StateManager.AddInstruction(OP_StateType,0,"#");
+				 StateManager.AddInstruction(OP_PUSH,0,tok.GetToken());
+				 StateManager.AddInstruction(OP_EQUAL,0,"#");
+			 }else if (tok.CheckToken("!="))
+			 {
+				 StateManager.AddInstruction(OP_StateType,0,"#");
+				 StateManager.AddInstruction(OP_PUSH,0,tok.GetToken());
+				 StateManager.AddInstruction(OP_NOTEQUAL,0,"#");
+			 }
 			 
+		 }
+		 else if (i == OP_P2StateType - OP_Abs)
+		 {
+			 if (tok.CheckToken("="))
+			 {
+				 StateManager.AddInstruction(OP_P2StateType,0,"#");
+				 StateManager.AddInstruction(OP_PUSH,0,tok.GetToken());
+				 StateManager.AddInstruction(OP_EQUAL,0,"#");
+			 }else if (tok.CheckToken("!="))
+			 {
+				 StateManager.AddInstruction(OP_P2StateType,0,"#");
+				 StateManager.AddInstruction(OP_PUSH,0,tok.GetToken());
+				 StateManager.AddInstruction(OP_NOTEQUAL,0,"#");
+			 }
+
+		 }
+		 else if (i == OP_P2MoveType - OP_Abs)
+		 {
+			 if (tok.CheckToken("="))
+			 {
+				 StateManager.AddInstruction(OP_P2MoveType,0,"#");
+				 StateManager.AddInstruction(OP_PUSH,0,tok.GetToken());
+				 StateManager.AddInstruction(OP_EQUAL,0,"#");
+			 }else if (tok.CheckToken("!="))
+			 {
+				 StateManager.AddInstruction(OP_P2MoveType,0,"#");
+				 StateManager.AddInstruction(OP_PUSH,0,tok.GetToken());
+				 StateManager.AddInstruction(OP_NOTEQUAL,0,"#");
+			 }
+
 		 }
 		 else if (i == OP_GetHitVar - OP_Abs)
 		 {
@@ -1083,6 +1133,16 @@ void CStateParser::Primary(CTokenizer &tok,CStateManager &StateManager)
 			 StateManager.AddInstruction(OP_GetHitVar,0,tok.GetToken());
 			 if (!tok.CheckToken(")"))
 				 Error("Missing )",tok);
+		 }
+		 else if (i == OP_HitDefAttr - OP_Abs)
+		 {
+			 while (!tok.AtEndOfLine())
+				 tok.GetToken();
+		 }
+		 else if (i == OP_P2BodyDist - OP_Abs)
+		 {
+			 while (!tok.AtEndOfLine())
+				 tok.GetToken();
 		 }
 		 else
 		 {
@@ -1219,7 +1279,21 @@ void CStateParser::ParseChangeAnim(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok); 
 
 			EvaluateExpression(tok,StateManager); 
-		}            
+		} 
+		else if (tok.CheckToken("elem"))
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok); 
+
+			EvaluateExpression(tok,StateManager); 
+		}  
+		else if (tok.CheckToken("ignorehitpause"))
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok); 
+
+			EvaluateExpression(tok,StateManager); 
+		}  
 	}
 	StateManager.SetController(temp);
 	StateManager.NewInst(); 

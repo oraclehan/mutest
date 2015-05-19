@@ -1,4 +1,5 @@
 #include "global.h"
+#include <algorithm>
 static const int skTokDefaultOperatorCount = 23;
 static char sTokDefaultCommentChars[] = ";";
 static char* sTokDefaultOperators[skTokDefaultOperatorCount] = 
@@ -359,6 +360,26 @@ bool CTokenizer::CheckToken( const char* stringToLookFor, bool consumeIfMatch )
     bool result = m_IsCaseSensitive ? ( strcmp( stringToLookFor, m_Buffer ) == 0 ) : ( strcmpi( stringToLookFor, m_Buffer ) == 0 ); 
     m_BufferIsNextToken = consumeIfMatch ? !result : true;
     return result;    
+}
+
+bool CTokenizer::CheckTokenLike( const char* stringToLookFor, bool consumeIfMatch )
+{
+	if( !m_BufferIsNextToken )
+	{
+		if( !GetToken() )
+			return false;
+	}
+
+	std::string res = m_Buffer;
+	if (!m_IsCaseSensitive)
+	{
+		std::transform(res.begin(),res.end(),res.begin(), tolower);
+	}
+	
+	bool result = res.find(stringToLookFor) != std::string::npos;
+	//bool result = m_IsCaseSensitive ? ( strcmp( stringToLookFor, m_Buffer ) == 0 ) : ( strcmpi( stringToLookFor, m_Buffer ) == 0 ); 
+	m_BufferIsNextToken = consumeIfMatch ? !result : true;
+	return result;    
 }
 
 float CTokenizer::GetFloat()

@@ -231,6 +231,12 @@ bool CStateManager::IsStateDefAviable(s32 nStateDefNum)
 void CStateManager::AddStateDef(s32 nStateDefNum)
 {
 //    PrintMessage("AddStateDef %i",nStateDefNum);
+
+	if (-1 == nStateDefNum)
+	{
+		int a;
+		a = 0;
+	}
     
      if( IsStateDefAviable(nStateDefNum) )
         PrintMessage("Overwriting StateDef %i",nStateDefNum);                             
