@@ -1,3 +1,4 @@
 *.obj
 *.tlog
+*.o
 "VC project"\OpenMugen\Debug\
