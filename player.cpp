@@ -271,6 +271,8 @@ void CPlayer::ChangeState(s32 nStateNumber)
 		 return;
 	 }
      lpCurrStatedef=m_StateManager.GetStateDef(nStateNumber);
+
+	 PrintMessage("player  change to state %d", nStateNumber);
      
      //Set StateType
      if(lpCurrStatedef->type!=untouch)
@@ -345,13 +347,6 @@ bool CPlayer::IsAnimAviable(s32 nAnim)
 
 float CPlayer::GetParamValue( PARAMVALUES value )
 {
-// 	PA_VALUE=128,
-// 		PA_XVALUE,
-//		PA_YVALUE,
-//		PA_VAR,
-//		PA_FVAR,
-//		PA_SYSVAR,
-//		PA_SYSFVAR,
 	float ret = 0.0;
 	switch(value) {
 		case PA_VALUE:
@@ -384,18 +379,120 @@ float CPlayer::GetParamValue( PARAMVALUES value )
 			}
 			break;
 		case PA_VAR:
-			ret = yVel;
+			if (lpCurrState && lpCurrState->controller) 
+			{
+				COMMONCTRLDATA * pData = (COMMONCTRLDATA *)lpCurrState->controller;
+				ret = NOPARAM;
+				if (pData->var)
+				{
+					ret = m_pVMachine->Execute(pData->var);
+				}
+			}
 			break;
 		case PA_FVAR:
-			ret = yVel;
+			if (lpCurrState && lpCurrState->controller) 
+			{
+				COMMONCTRLDATA * pData = (COMMONCTRLDATA *)lpCurrState->controller;
+				ret = NOPARAM;
+				if (pData->fvar)
+				{
+					ret = m_pVMachine->Execute(pData->fvar);
+				}
+			}
 			break;
 		case PA_SYSVAR:
-			ret = yVel;
+			if (lpCurrState && lpCurrState->controller) 
+			{
+				COMMONCTRLDATA * pData = (COMMONCTRLDATA *)lpCurrState->controller;
+				ret = NOPARAM;
+				if (pData->sysvar)
+				{
+					ret = m_pVMachine->Execute(pData->sysvar);
+				}
+			}
 			break;
 		case PA_SYSFVAR:
-			ret = yVel;
+			if (lpCurrState && lpCurrState->controller) 
+			{
+				COMMONCTRLDATA * pData = (COMMONCTRLDATA *)lpCurrState->controller;
+				ret = NOPARAM;
+				if (pData->sysfvar)
+				{
+					ret = m_pVMachine->Execute(pData->sysfvar);
+				}
+			}
 			break;
 	}
 	return ret;
 }
+
+void CPlayer::SetVar(int index, int value)
+{
+	if (index >= 200)
+	{
+		return;
+	}
+	m_Var[index] = value;
+}
+void CPlayer::SetFVar(int index, float value)
+{
+	if (index >= 200)
+	{
+		return;
+	}
+	m_Var[index] = value;
+}
+void CPlayer::SetSysVar(int index, int value)
+{
+	if (index >= 200)
+	{
+		return;
+	}
+	m_pEngine->m_sysVar[index] = value;
+}
+void CPlayer::SetSysFVar(int index, float value)
+{
+	if (index >= 200)
+	{
+		return;
+	}
+	m_pEngine->m_sysVar[index] = value;
+}
+
+int CPlayer::GetVar( int index )
+{
+	if (index >= 200)
+	{
+		return -1;
+	}
+	return m_Var[index];
+}
+
+float CPlayer::GetFVar( int index )
+{
+	if (index >= 200)
+	{
+		return -1;
+	}
+	return m_Var[index];
+}
+
+int CPlayer::GetSysVar( int index )
+{
+	if (index >= 200)
+	{
+		return -1;
+	}
+	return m_pEngine->m_sysVar[index];
+}
+
+float CPlayer::GetSysFVar( int index )
+{
+	if (index >= 200)
+	{
+		return -1;
+	}
+	return m_pEngine->m_sysVar[index];
+}
+
 

@@ -609,6 +609,11 @@ struct COMMONCTRLDATA
 		elem = nullptr;
 		velx = nullptr;
 		vely = nullptr;
+
+		var = nullptr;
+		fvar = nullptr;
+		sysvar = nullptr;
+		sysfvar = nullptr;
 	}
 	INSTRUCTION *value;
 	INSTRUCTION *ctrl;
@@ -617,6 +622,10 @@ struct COMMONCTRLDATA
 	INSTRUCTION *elem;
 	INSTRUCTION *velx;
 	INSTRUCTION *vely;
+	INSTRUCTION *var;
+	INSTRUCTION *fvar;
+	INSTRUCTION *sysvar;
+	INSTRUCTION *sysfvar;
 };
 
 struct CHANGESTATE
@@ -630,6 +639,11 @@ struct CHANGEANIM
 };
 
 struct VELSET
+{
+	COMMONCTRLDATA common;
+};
+
+struct VARSET
 {
 	COMMONCTRLDATA common;
 };
