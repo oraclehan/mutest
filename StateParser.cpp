@@ -748,7 +748,7 @@ void CStateParser::EvaluateExpression(CTokenizer &tok,CStateManager &StateManage
 		if( tok.CheckToken("&&") )
 		{
 			Term(tok,StateManager);
-			StateManager.AddInstruction(OP_LOGAND,0,"#");
+			StateManager.AddInstruction(OP_AND,0,"#");
 
 		}
 
@@ -847,7 +847,7 @@ void CStateParser::Term(CTokenizer &tok,CStateManager &StateManager)
                 else // is the = op
                 {                
 					//evalute the right side of the operator
-					EvaluateExpression(tok,StateManager);
+					Primary(tok,StateManager);
 					StateManager.AddInstruction(OP_EQUAL,0,"#");
                 }
            }

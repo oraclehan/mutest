@@ -11,7 +11,7 @@ public:
     CCmdManager( int keyBufferSize = 120 );
     ~CCmdManager();
     
-    bool LoadCMDFile( const char* file );  // returns false upon load failure
+    bool LoadCMDFile( const char* file, bool bPlayer2 = false );  // returns false upon load failure
     
     void Update( KEYBOARDDATA* keys, bool facingRight );
     

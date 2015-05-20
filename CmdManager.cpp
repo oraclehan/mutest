@@ -19,7 +19,7 @@ CCmdManager::~CCmdManager()
     delete m_KeyBuffer;
 }
 
-bool CCmdManager::LoadCMDFile( const char* file )
+bool CCmdManager::LoadCMDFile( const char* file, bool bPlayer2)
 {
     int defaultCommandTime = 15;
     int defaultBufferTime = 1;
@@ -157,63 +157,63 @@ bool CCmdManager::LoadCMDFile( const char* file )
                             }                            
                             else if( !strcmp( token, "D" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_DOWN );
+								command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_DOWN );
                             }
                             else if( !strcmp( token, "U" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_UP );
+                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_UP );
                             }
                             else if( !strcmp( token, "B" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_LEFT );
+                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_LEFT );
                             }
                             else if( !strcmp( token, "F" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_RIGHT );
+                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_RIGHT );
                             }
                             else if( !strcmp( token, "DB" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_DOWN ) + PLC_KEYCODE( KEY_LEFT );
+                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_DOWN ) + PLC_KEYCODE(KEY_LEFT );
                             }
                             else if( !strcmp( token, "DF" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_DOWN ) + PLC_KEYCODE( KEY_RIGHT );
+                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_DOWN ) + PLC_KEYCODE(KEY_RIGHT );
                             }
                             else if( !strcmp( token, "UF" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_UP ) + PLC_KEYCODE( KEY_LEFT );
+                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_UP ) + PLC_KEYCODE(KEY_LEFT );
                             }
                             else if( !strcmp( token, "UB" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_UP ) + PLC_KEYCODE( KEY_LEFT );
+                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_UP ) + PLC_KEYCODE(KEY_LEFT );
                             }
                             else if( !strcmp( token, "a" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_BUTTON_A );
+                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_BUTTON_A );
                             }
                             else if( !strcmp( token, "b" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_BUTTON_B );
+                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_BUTTON_B );
                             }
                             else if( !strcmp( token, "c" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_BUTTON_C );
+                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_BUTTON_C );
                             }
                             else if( !strcmp( token, "x" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_BUTTON_X );
+                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_BUTTON_X );
                             }
                             else if( !strcmp( token, "y" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_BUTTON_Y );
+                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_BUTTON_Y );
                             }
                             else if( !strcmp( token, "z" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_BUTTON_Z );
+                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_BUTTON_Z );
                             }
                             else if( !strcmp( token, "s" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE( KEY_BUTTON_START );
+                                command->nCommand[ command->nHowManyCommand ].keyCode += PLC_KEYCODE(KEY_BUTTON_START );
                             }
                         }
                         command->nHowManyCommand++;

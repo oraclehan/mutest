@@ -76,6 +76,18 @@ void CGame::InitGame()
 		SDLK_l,
 		SDLK_1,
 		SDLK_2,
+		SDLK_UP,
+		SDLK_DOWN,
+		SDLK_LEFT,
+		SDLK_RIGHT,
+		SDLK_KP4,
+		SDLK_KP5,
+		SDLK_KP6,
+		SDLK_KP1,
+		SDLK_KP2,
+		SDLK_KP3,
+		SDLK_3,
+		SDLK_4,
 	};
 
 	for( int k = 0; k < KEY_COUNT; k++ )
