@@ -252,12 +252,12 @@ enum OPCODES
 	OP_AnimTime = 38,
 	OP_Asin = 39,
 	OP_Atan = 40,
-	OP_AuthorName,
-	OP_BackEdgeBodyDist,
-	OP_BackEdgeDist,
-	OP_CanRecover,
-	OP_Ceil,
-	OP_Command,
+	OP_AuthorName = 41,
+	OP_BackEdgeBodyDist = 42,
+	OP_BackEdgeDist = 43,
+	OP_CanRecover = 44,
+	OP_Ceil = 45,
+	OP_Command = 46,
 	OP_Const,
 	OP_Cos,
 	OP_Ctrl,
@@ -317,43 +317,43 @@ enum OPCODES
 	OP_ParentDist,
 	OP_Pi,
 	OP_Pos,
-	OP_Power,
-	OP_PowerMax,
-	OP_PlayerIDExist,
-	OP_PrevStateNo,
-	OP_ProjCancelTime,
-	OP_ProjContact,
-	OP_ProjContactTime,
-	OP_ProjGuarded,
-	OP_ProjGuardedTime,
-	OP_ProjHit,
-	OP_ProjHitTime,
-	OP_Random,
-	OP_RootDist,
-	OP_RoundNo,
-	OP_RoundsExisted,
-	OP_RoundState,
-	OP_ScreenPos,
-	OP_SelfAnimExist,
-	OP_Sin,
-	OP_StateNo,
-	OP_StateType,
-	OP_StateTime,
-	OP_SysFVar,
-	OP_SysVar,
-	OP_Tan,
-	OP_TeamMode,
-	OP_TeamSide,
-	OP_TicksPerSecond,
-	OP_Time,
-	OP_TimeMod,
-	OP_UniqHitCount,
-	OP_Var,
-	OP_Vel,
-	OP_Win,
-	OP_MOD,
-	OP_NOP,
-	OP_STOP,
+	OP_Power = 106,
+	OP_PowerMax = 107,
+	OP_PlayerIDExist= 108,
+	OP_PrevStateNo = 109,
+	OP_ProjCancelTime = 110,
+	OP_ProjContact= 111,
+	OP_ProjContactTime = 112,
+	OP_ProjGuarded = 113,
+	OP_ProjGuardedTime = 114,
+	OP_ProjHit = 115,
+	OP_ProjHitTime = 116,
+	OP_Random = 117,
+	OP_RootDist = 118,
+	OP_RoundNo = 119,
+	OP_RoundsExisted = 120,
+	OP_RoundState = 121,
+	OP_ScreenPos = 122,
+	OP_SelfAnimExist = 123,
+	OP_Sin = 124,
+	OP_StateNo = 125,
+	OP_StateType = 126,
+	OP_StateTime = 127,
+	OP_SysFVar = 128,
+	OP_SysVar = 129,
+	OP_Tan = 130,
+	OP_TeamMode = 131,
+	OP_TeamSide = 132,
+	OP_TicksPerSecond = 133,
+	OP_Time = 134,
+	OP_TimeMod = 135,
+	OP_UniqHitCount = 136,
+	OP_Var = 137,
+	OP_Vel = 138,
+	OP_Win = 139,
+	OP_MOD = 140,
+	OP_NOP = 141,
+	OP_STOP = 142,
    
 };
 
@@ -598,27 +598,40 @@ struct PLAYERCONST
 
 };
 
-struct CHANGESTATE
+struct COMMONCTRLDATA
 {
-  INSTRUCTION *value;
-  INSTRUCTION *ctrl;
-  INSTRUCTION *anim;
-       
-};
-
-struct CHANGEANIM
-{
+	COMMONCTRLDATA()
+	{
+		value = nullptr;
+		ctrl = nullptr;
+		anim = nullptr;
+		ignorePause = nullptr;
+		elem = nullptr;
+		velx = nullptr;
+		vely = nullptr;
+	}
 	INSTRUCTION *value;
 	INSTRUCTION *ctrl;
 	INSTRUCTION *anim;
 	INSTRUCTION *ignorePause;
 	INSTRUCTION *elem;
+	INSTRUCTION *velx;
+	INSTRUCTION *vely;
+};
+
+struct CHANGESTATE
+{
+	COMMONCTRLDATA common;
+};
+
+struct CHANGEANIM
+{
+	COMMONCTRLDATA common;
 };
 
 struct VELSET
 {
-	INSTRUCTION *x;
-	INSTRUCTION *y;
+	COMMONCTRLDATA common;
 };
 
 

@@ -103,6 +103,7 @@ private:
 	u16 nCurrParam;
 
 	PLSTATEDEF *lpStateDefSpec[3];
+	PLSTATEDEF *lpCurrentStateDef; 
 	
 	bool bParam;
 

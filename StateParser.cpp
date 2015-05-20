@@ -1222,7 +1222,7 @@ void CStateParser::ParseVelSetState(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);  
 
 			EvaluateExpression(tok,StateManager);
-			temp->x = StateManager.GetParamIns();
+			temp->common.vely = StateManager.GetParamIns();
 
 		}else if( tok.CheckToken("x") )
 		{
@@ -1230,7 +1230,7 @@ void CStateParser::ParseVelSetState(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);
 
 			EvaluateExpression(tok,StateManager);  
-			temp->y = StateManager.GetParamIns();
+			temp->common.velx = StateManager.GetParamIns();
 		}else if (tok.CheckToken("persistent") ) 
 		{
 			if( !tok.CheckToken("=") )
@@ -1257,7 +1257,7 @@ void CStateParser::ParseChangeAnim(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);  
 
 			EvaluateExpression(tok,StateManager);
-			temp->value = StateManager.GetParamIns();
+			temp->common.value = StateManager.GetParamIns();
 			
 		}else if( tok.CheckToken("ctrl") )
 		{
@@ -1265,14 +1265,14 @@ void CStateParser::ParseChangeAnim(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);
 
 			EvaluateExpression(tok,StateManager);  
-			temp->ctrl= StateManager.GetParamIns();
+			temp->common.ctrl= StateManager.GetParamIns();
 		}else if ( tok.CheckToken("anim") )
 		{
 			if( !tok.CheckToken("=") )
 				Error("expected =",tok); 
 
 			EvaluateExpression(tok,StateManager); 
-			temp->anim = StateManager.GetParamIns();
+			temp->common.anim = StateManager.GetParamIns();
 		}else if (tok.CheckToken("persistent"))
 		{
 			if( !tok.CheckToken("=") )
@@ -1312,21 +1312,21 @@ void CStateParser::ParseChangeState(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);  
                           
 			EvaluateExpression(tok,StateManager);
-			temp->value = StateManager.GetParamIns();
+			temp->common.value = StateManager.GetParamIns();
 		}else if( tok.CheckToken("ctrl") )
 		{
 			if( !tok.CheckToken("=") )
 				Error("expected =",tok);
 
 			EvaluateExpression(tok,StateManager);  
-            temp->ctrl = StateManager.GetParamIns();      
+            temp->common.ctrl = StateManager.GetParamIns();      
 		}else if ( tok.CheckToken("anim") )
 		{
 			if( !tok.CheckToken("=") )
 				Error("expected =",tok); 
                   
 			EvaluateExpression(tok,StateManager); 
-			temp->anim = StateManager.GetParamIns();    
+			temp->common.anim = StateManager.GetParamIns();    
                   
 		}            
 	}

@@ -152,6 +152,7 @@ void ScreenPos();
 void SelfAnimExist();
 void Sin();
 void StateNo();
+void StateTime();
 void StateType();
 void SysFVar();
 void SysVar();

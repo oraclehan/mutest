@@ -119,7 +119,7 @@ void CControllerExecuter::InitFuncTable()
     pFuncTable[79]=NULL;
     pFuncTable[80]=&CControllerExecuter::VarSet;
     pFuncTable[81]=NULL;
-    pFuncTable[82]=NULL;
+    pFuncTable[82]=&CControllerExecuter::VarSet;;
     pFuncTable[83]=&CControllerExecuter::VelSet;
     pFuncTable[84]=NULL;
     pFuncTable[85]=&CControllerExecuter::VelSet;;
@@ -183,43 +183,44 @@ void CControllerExecuter::VelSet()
 //VarSet Controller
 void CControllerExecuter::VarSet()
 {
-    /*float fVarValue=0;
+	/*
+    float fVarValue=0;
     int index=0;
     
     //check which var to set
     
     //VAR
-    fVarValue=((CPlayer*)lpPlayer)->GetParamValue(PA_VAR);
+	fVarValue=((CPlayer*)m_pPlayer1)->GetParamValue(PA_VAR);
     if(fVarValue!=NOPARAM)
     {
-        index=(int)((CPlayer*)lpPlayer)->m_VM.m_Stack.Pop().Value;
-       ((CPlayer*)lpPlayer)->SetIVar(index,fVarValue);
+        index=(int)((CPlayer*)m_pPlayer1)->m_Stack.Pop().Value;
+       ((CPlayer*)m_pPlayer1)->SetIVar(index,fVarValue);
     
     }
 
     //FVAR
-    fVarValue=((CPlayer*)lpPlayer)->GetParamValue(PA_FVAR);
+    fVarValue=((CPlayer*)m_pPlayer1)->GetParamValue(PA_FVAR);
     if(fVarValue!=NOPARAM)
     {
-        index=(int)((CPlayer*)lpPlayer)->m_VM.m_Stack.Pop().Value;
-       ((CPlayer*)lpPlayer)->SetFVar(index,fVarValue);
+        index=(int)((CPlayer*)m_pPlayer1)->m_VM.m_Stack.Pop().Value;
+       ((CPlayer*)m_pPlayer1)->SetFVar(index,fVarValue);
     
     }
     
     //SYSVAR
-    fVarValue=((CPlayer*)lpPlayer)->GetParamValue(PA_SYSVAR);
+    fVarValue=((CPlayer*)m_pPlayer1)->GetParamValue(PA_SYSVAR);
     if(fVarValue!=NOPARAM)
     {
-        index=(int)((CPlayer*)lpPlayer)->m_VM.m_Stack.Pop().Value;
+        index=(int)((CPlayer*)m_pPlayer1)->m_VM.m_Stack.Pop().Value;
        ((CPlayer*)lpPlayer)->SetSysVar(index,fVarValue);
     
     }
     
    //SYSFVAR
-    fVarValue=((CPlayer*)lpPlayer)->GetParamValue(PA_SYSFVAR);
+    fVarValue=((CPlayer*)m_pPlayer1)->GetParamValue(PA_SYSFVAR);
     if(fVarValue!=NOPARAM)
     {
-        index=(int)((CPlayer*)lpPlayer)->m_VM.m_Stack.Pop().Value;
+        index=(int)((CPlayer*)m_pPlayer1)->m_VM.m_Stack.Pop().Value;
        ((CPlayer*)lpPlayer)->SetSysFVar(index,fVarValue);
     
     }
