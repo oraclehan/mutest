@@ -120,6 +120,11 @@ Handles the FSM of the player
 */
 void CPlayer::HandleFSM()
 {
+	if (m_CmdManager.GetCurrentCommandName() && strcmp(m_CmdManager.GetCurrentCommandName(), "holddown") == 0)
+	{
+		int a;
+		a = 0;
+	}
 	//execute -3 .. -1 state
 	for (int index = -3; index < 0; index++)
 	{
@@ -271,6 +276,8 @@ void CPlayer::ChangeState(s32 nStateNumber)
 		 return;
 	 }
      lpCurrStatedef=m_StateManager.GetStateDef(nStateNumber);
+
+	 PrintMessage("player  change to state %d", nStateNumber);
      
      //Set StateType
      if(lpCurrStatedef->type!=untouch)
@@ -345,41 +352,152 @@ bool CPlayer::IsAnimAviable(s32 nAnim)
 
 float CPlayer::GetParamValue( PARAMVALUES value )
 {
-// 	PA_VALUE=128,
-// 		PA_XVALUE,
-//		PA_YVALUE,
-//		PA_VAR,
-//		PA_FVAR,
-//		PA_SYSVAR,
-//		PA_SYSFVAR,
 	float ret = 0.0;
 	switch(value) {
 		case PA_VALUE:
  			if (lpCurrState && lpCurrState->controller) 
  			{
-				CHANGEANIM * pAnim = (CHANGEANIM *)lpCurrState->controller;
- 				ret = m_pVMachine->Execute(pAnim->value);
+				COMMONCTRLDATA * pData = (COMMONCTRLDATA *)lpCurrState->controller;
+ 				ret = m_pVMachine->Execute(pData->value);
  			}
 			break;
 		case PA_XVALUE:
-			ret = xVel;
+			if (lpCurrState && lpCurrState->controller) 
+			{
+				COMMONCTRLDATA * pData = (COMMONCTRLDATA *)lpCurrState->controller;
+				ret = xVel;
+				if (pData->velx)
+				{
+					ret = m_pVMachine->Execute(pData->velx);
+				}
+			}
 			break;
 		case PA_YVALUE:
-			ret = yVel;
+			if (lpCurrState && lpCurrState->controller) 
+			{
+				COMMONCTRLDATA * pData = (COMMONCTRLDATA *)lpCurrState->controller;
+				ret = yVel;
+				if (pData->vely)
+				{
+					ret = m_pVMachine->Execute(pData->vely);
+				}
+			}
 			break;
 		case PA_VAR:
-			ret = yVel;
+			if (lpCurrState && lpCurrState->controller) 
+			{
+				COMMONCTRLDATA * pData = (COMMONCTRLDATA *)lpCurrState->controller;
+				ret = NOPARAM;
+				if (pData->var)
+				{
+					ret = m_pVMachine->Execute(pData->var);
+				}
+			}
 			break;
 		case PA_FVAR:
-			ret = yVel;
+			if (lpCurrState && lpCurrState->controller) 
+			{
+				COMMONCTRLDATA * pData = (COMMONCTRLDATA *)lpCurrState->controller;
+				ret = NOPARAM;
+				if (pData->fvar)
+				{
+					ret = m_pVMachine->Execute(pData->fvar);
+				}
+			}
 			break;
 		case PA_SYSVAR:
-			ret = yVel;
+			if (lpCurrState && lpCurrState->controller) 
+			{
+				COMMONCTRLDATA * pData = (COMMONCTRLDATA *)lpCurrState->controller;
+				ret = NOPARAM;
+				if (pData->sysvar)
+				{
+					ret = m_pVMachine->Execute(pData->sysvar);
+				}
+			}
 			break;
 		case PA_SYSFVAR:
-			ret = yVel;
+			if (lpCurrState && lpCurrState->controller) 
+			{
+				COMMONCTRLDATA * pData = (COMMONCTRLDATA *)lpCurrState->controller;
+				ret = NOPARAM;
+				if (pData->sysfvar)
+				{
+					ret = m_pVMachine->Execute(pData->sysfvar);
+				}
+			}
 			break;
 	}
 	return ret;
 }
+
+void CPlayer::SetVar(int index, int value)
+{
+	if (index >= 200)
+	{
+		return;
+	}
+	m_Var[index] = value;
+}
+void CPlayer::SetFVar(int index, float value)
+{
+	if (index >= 200)
+	{
+		return;
+	}
+	m_Var[index] = value;
+}
+void CPlayer::SetSysVar(int index, int value)
+{
+	if (index >= 200)
+	{
+		return;
+	}
+	m_pEngine->m_sysVar[index] = value;
+}
+void CPlayer::SetSysFVar(int index, float value)
+{
+	if (index >= 200)
+	{
+		return;
+	}
+	m_pEngine->m_sysVar[index] = value;
+}
+
+int CPlayer::GetVar( int index )
+{
+	if (index >= 200)
+	{
+		return -1;
+	}
+	return m_Var[index];
+}
+
+float CPlayer::GetFVar( int index )
+{
+	if (index >= 200)
+	{
+		return -1;
+	}
+	return m_Var[index];
+}
+
+int CPlayer::GetSysVar( int index )
+{
+	if (index >= 200)
+	{
+		return -1;
+	}
+	return m_pEngine->m_sysVar[index];
+}
+
+float CPlayer::GetSysFVar( int index )
+{
+	if (index >= 200)
+	{
+		return -1;
+	}
+	return m_pEngine->m_sysVar[index];
+}
+
 

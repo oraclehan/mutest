@@ -1,0 +1,42 @@
+﻿生成启动时间为 5/20/2015 4:07:59 PM。
+     1>项目“C:\work\mugen\VC project\OpenMugen\OpenMugen.vcxproj”在节点 2 上(Build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“Debug\OpenMugen.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I..\..\tool\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\player.cpp
+         player.cpp
+     1>c:\work\mugen\structs.h(653): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+     1>c:\work\mugen\player.cpp(218): warning C4996: '_snprintf': This function or variable may be unsafe. Consider using _snprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(349) : 参见“_snprintf”的声明
+     1>c:\work\mugen\player.cpp(286): warning C4800: “s8”: 将值强制为布尔值“true”或“false”(性能警告)
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"Debug\OpenMugen.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\..\tool\lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"Debug\OpenMugen.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Debug\OpenMugen.lib" /MACHINE:X86 /SAFESEH Debug\AirManager.obj
+         Debug\CmdManager.obj
+         Debug\ControllerExecuter.obj
+         Debug\engine.obj
+         Debug\game.obj
+         Debug\global.obj
+         Debug\Input.obj
+         Debug\main.obj
+         Debug\MemManager.obj
+         Debug\player.obj
+         Debug\scale2xSDL.obj
+         Debug\SDL_framerate.obj
+         Debug\SDLManager.obj
+         Debug\SffManager.obj
+         Debug\Stack.obj
+         Debug\StateManager.obj
+         Debug\StateParser.obj
+         Debug\tokenizer.obj
+         Debug\VideoSystem.obj
+         Debug\VM.obj
+         OpenMugen.vcxproj -> C:\work\mugen\VC project\OpenMugen\Debug\OpenMugen.exe
+       FinalizeBuildStatus:
+         正在删除文件“Debug\OpenMugen.unsuccessfulbuild”。
+         正在对“Debug\OpenMugen.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“C:\work\mugen\VC project\OpenMugen\OpenMugen.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:01.24

@@ -46,6 +46,7 @@ public:
     void ChangeAnim();
     void VelSet();
     void VarSet();
+	void VelMul();
 
     
     

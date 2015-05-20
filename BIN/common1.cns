@@ -32,6 +32,7 @@
 type = S
 physics = S
 sprpriority = 0
+ctrl = 1
 
 [State 0, 1]
 type = ChangeAnim
@@ -39,22 +40,7 @@ trigger1 = Anim != 0 && Anim != 5
 trigger2 = Anim = 5 && AnimTime = 0 ;Turn anim over
 value = 0
 
-[State 0, 2]
-type = VelSet
-trigger1 = Time = 0
-y = 0
 
-[State 0, 3] ;Stop moving if low velocity or 4 ticks pass
-type = VelSet
-trigger1 = abs(vel x) < 2;Const(movement.stand.friction.threshold)
-trigger2 = Time = 4
-x = 0
-
-[State 0, 4] ;Are you dead?
-type = ChangeState
-trigger1 = !alive
-value = 5050
-ctrl = 0
 
 ;---------------------------------------------------------------------------
 ; Stand to Crouch
@@ -95,6 +81,11 @@ value = 11
 type = VelSet
 trigger1 = abs(vel x) < 2;Const(movement.crouch.friction.threshold)
 x = 0
+
+[State 11, 3]
+type = ChangeState
+trigger1 = command != "holddown"
+value = 12
 
 ;---------------------------------------------------------------------------
 ; Crouch to Stand

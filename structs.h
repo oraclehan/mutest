@@ -598,27 +598,54 @@ struct PLAYERCONST
 
 };
 
-struct CHANGESTATE
+struct COMMONCTRLDATA
 {
-  INSTRUCTION *value;
-  INSTRUCTION *ctrl;
-  INSTRUCTION *anim;
-       
-};
+	COMMONCTRLDATA()
+	{
+		value = nullptr;
+		ctrl = nullptr;
+		anim = nullptr;
+		ignorePause = nullptr;
+		elem = nullptr;
+		velx = nullptr;
+		vely = nullptr;
 
-struct CHANGEANIM
-{
+		var = nullptr;
+		fvar = nullptr;
+		sysvar = nullptr;
+		sysfvar = nullptr;
+	}
 	INSTRUCTION *value;
 	INSTRUCTION *ctrl;
 	INSTRUCTION *anim;
 	INSTRUCTION *ignorePause;
 	INSTRUCTION *elem;
+	INSTRUCTION *velx;
+	INSTRUCTION *vely;
+	INSTRUCTION *var;
+	INSTRUCTION *fvar;
+	INSTRUCTION *sysvar;
+	INSTRUCTION *sysfvar;
+};
+
+struct CHANGESTATE
+{
+	COMMONCTRLDATA common;
+};
+
+struct CHANGEANIM
+{
+	COMMONCTRLDATA common;
 };
 
 struct VELSET
 {
-	INSTRUCTION *x;
-	INSTRUCTION *y;
+	COMMONCTRLDATA common;
+};
+
+struct VARSET
+{
+	COMMONCTRLDATA common;
 };
 
 

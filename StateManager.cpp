@@ -429,11 +429,11 @@ void CStateManager::AddState(s32 nStateNum,const char* strSomeNumber)
         nTotalStateSize+=100;
         lpCurrentStateDef->lpState=(PLSTATE*)m_pAlloc->Realloc(lpCurrentStateDef->lpState,
                                                                             sizeof(PLSTATE)*nTotalStateSize);
-    }
+	}
     
     lpCurrentStateDef->lpState[nTotalState].nStateNumber=nStateNum;
 
-	lpCurrentStateDef->lpState[nTotalState].persistent = 0;
+	lpCurrentStateDef->lpState[nTotalState].persistent = 1;
 	lpCurrentStateDef->lpState[nTotalState].persistCount = 0;
      
     nCurrTrigger=0;

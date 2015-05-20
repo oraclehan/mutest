@@ -1196,7 +1196,9 @@ void CStateParser::ParserController(CTokenizer &tok,CStateManager &StateManager,
                                 
      switch(nControllerType)
      {
-        //ChangeState 
+		case VarSet:
+			ParseVarSet(tok, StateManager);
+			break;
 		case ChangeAnim:
 			ParseChangeAnim(tok, StateManager);
 			break;
@@ -1222,7 +1224,7 @@ void CStateParser::ParseVelSetState(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);  
 
 			EvaluateExpression(tok,StateManager);
-			temp->x = StateManager.GetParamIns();
+			temp->common.vely = StateManager.GetParamIns();
 
 		}else if( tok.CheckToken("x") )
 		{
@@ -1230,7 +1232,7 @@ void CStateParser::ParseVelSetState(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);
 
 			EvaluateExpression(tok,StateManager);  
-			temp->y = StateManager.GetParamIns();
+			temp->common.velx = StateManager.GetParamIns();
 		}else if (tok.CheckToken("persistent") ) 
 		{
 			if( !tok.CheckToken("=") )
@@ -1257,7 +1259,7 @@ void CStateParser::ParseChangeAnim(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);  
 
 			EvaluateExpression(tok,StateManager);
-			temp->value = StateManager.GetParamIns();
+			temp->common.value = StateManager.GetParamIns();
 			
 		}else if( tok.CheckToken("ctrl") )
 		{
@@ -1265,14 +1267,14 @@ void CStateParser::ParseChangeAnim(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);
 
 			EvaluateExpression(tok,StateManager);  
-			temp->ctrl= StateManager.GetParamIns();
+			temp->common.ctrl= StateManager.GetParamIns();
 		}else if ( tok.CheckToken("anim") )
 		{
 			if( !tok.CheckToken("=") )
 				Error("expected =",tok); 
 
 			EvaluateExpression(tok,StateManager); 
-			temp->anim = StateManager.GetParamIns();
+			temp->common.anim = StateManager.GetParamIns();
 		}else if (tok.CheckToken("persistent"))
 		{
 			if( !tok.CheckToken("=") )
@@ -1312,23 +1314,106 @@ void CStateParser::ParseChangeState(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);  
                           
 			EvaluateExpression(tok,StateManager);
-			temp->value = StateManager.GetParamIns();
+			temp->common.value = StateManager.GetParamIns();
 		}else if( tok.CheckToken("ctrl") )
 		{
 			if( !tok.CheckToken("=") )
 				Error("expected =",tok);
 
 			EvaluateExpression(tok,StateManager);  
-            temp->ctrl = StateManager.GetParamIns();      
+            temp->common.ctrl = StateManager.GetParamIns();      
 		}else if ( tok.CheckToken("anim") )
 		{
 			if( !tok.CheckToken("=") )
 				Error("expected =",tok); 
                   
 			EvaluateExpression(tok,StateManager); 
-			temp->anim = StateManager.GetParamIns();    
+			temp->common.anim = StateManager.GetParamIns();    
                   
 		}            
+	}
+	StateManager.SetController(temp);
+	StateManager.NewInst(); 
+}
+
+void CStateParser::ParseVarSet( CTokenizer &tok, CStateManager &StateManager )
+{
+	VARSET *temp=(VARSET*) m_pAlloc->Alloc(sizeof(VARSET));
+	//TODO:Check for Required parameters and print error msg
+	while( !tok.CheckToken("[", false) && !tok.AtEndOfFile() )
+	{
+		StateManager.NewInst();
+		if( tok.CheckToken("sysvar") )
+		{
+			if( !tok.CheckToken("(") )
+				Error("expected (",tok);  
+
+			int value = tok.GetInt();
+
+			StateManager.AddInstruction(OP_PUSH, value, "#");
+
+			if( !tok.CheckToken(")") )
+				Error("expected )",tok);
+
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok);
+
+			EvaluateExpression(tok,StateManager);
+			temp->common.sysvar = StateManager.GetParamIns();
+		}else if( tok.CheckToken("sysfvar") )
+		{
+			if( !tok.CheckToken("(") )
+				Error("expected (",tok);  
+
+			int value = tok.GetInt();
+
+			StateManager.AddInstruction(OP_PUSH, value, "#");
+
+			if( !tok.CheckToken(")") )
+				Error("expected )",tok);
+
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok);
+
+			EvaluateExpression(tok,StateManager);
+			temp->common.sysfvar = StateManager.GetParamIns();     
+		}else if ( tok.CheckToken("var") )
+		{
+			if( !tok.CheckToken("(") )
+				Error("expected (",tok);  
+
+			int value = tok.GetInt();
+
+			StateManager.AddInstruction(OP_PUSH, value, "#");
+
+			if( !tok.CheckToken(")") )
+				Error("expected )",tok);
+
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok);
+
+			EvaluateExpression(tok,StateManager);
+			temp->common.var = StateManager.GetParamIns();     
+
+		}else if ( tok.CheckToken("fvar") )
+		{
+			if( !tok.CheckToken("(") )
+				Error("expected (",tok);  
+
+			int value = tok.GetInt();
+
+			StateManager.AddInstruction(OP_PUSH, value, "#");
+
+			if( !tok.CheckToken(")") )
+				Error("expected )",tok);
+
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok);
+
+			EvaluateExpression(tok,StateManager);
+			temp->common.fvar = StateManager.GetParamIns();     
+
+		}             
 	}
 	StateManager.SetController(temp);
 	StateManager.NewInst(); 

@@ -22,6 +22,7 @@
 #ifndef __PLAYER__H
 #define __PLAYER__H
 
+class CEngine;
 
 class CPlayer
 {
@@ -35,6 +36,7 @@ public:
 	CVirtualMachine    *m_pVMachine;
 	CControllerExecuter m_ControllerExec;
 	CCmdManager         m_CmdManager;
+	float				m_Var[200];
 	//Player information
 	float              x,y;
 	float              xVel,yVel;
@@ -92,6 +94,18 @@ public:
 	bool IsCtrl(){return bCtrl;}
 	float  GetParamValue(PARAMVALUES value);
 
+	void SetVar(int index, int value);
+	void SetFVar(int index, float value);
+	void SetSysVar(int index, int value);
+	void SetSysFVar(int index, float value);
+
+	int GetVar(int index);
+	float GetFVar(int index);
+	int GetSysVar(int index);
+	float GetSysFVar(int index);
+
+	void SetEngine(CEngine *pEngine) {m_pEngine = pEngine;};
+
 private:
     bool CheckState(PLSTATE* tempState);
     void ExecuteController(PLSTATE* tempState);
@@ -99,6 +113,8 @@ private:
     void HandlePhysic();
     void UpDateFacing();
     void Debug();
+
+	CEngine * m_pEngine;
 
 };
 

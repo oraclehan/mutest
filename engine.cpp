@@ -48,7 +48,10 @@ void CEngine::InitEngine(CMemManager *m,CVideoSystem *v,CGameTimer *t)
     
     //now set the VM to the player
     player1.SetVM(m_pVMp1);
-    player2.SetVM(m_pVMp1);
+    player2.SetVM(m_pVMp2);
+
+	player1.SetEngine(this);
+	player2.SetEngine(this);
     
     
     /*Set the gournd limit of the player 
@@ -63,8 +66,8 @@ void CEngine::InitEngine(CMemManager *m,CVideoSystem *v,CGameTimer *t)
     
 
     
-    player1.LoadPlayer("");
-    player2.LoadPlayer("");
+    player1.LoadPlayer("player1");
+    player2.LoadPlayer("player2");
     
     player2.FaceLeft();
     player1.SetDebug(true);

@@ -272,7 +272,7 @@ void CVirtualMachine::DivOP()
 //x==Y
 void CVirtualMachine::EqualOP()
 {
-   char strTemp[50],strTemp1[50];
+	char strTemp[50],strTemp1[50];
 
     PopValue();
     temp2=m_pop.Value;
@@ -315,18 +315,40 @@ void CVirtualMachine::EqualOP()
 //x!=y
 void CVirtualMachine::NotEqual()
 {
-    PopValue();
-    temp2=m_pop.Value;
-    PopValue();
-    temp1=m_pop.Value;
-    
+	char strTemp[50],strTemp1[50];
 
-    if(temp1!=temp2)
-        m_pop.Value=1;
-    else
-        m_pop.Value=0;
+	PopValue();
+	temp2=m_pop.Value;
+	strcpy(strTemp,m_pop.string);
 
-    m_Stack.Push(m_pop.Value,"#");
+	PopValue();
+	temp1=m_pop.Value;
+	strcpy(strTemp1,m_pop.string);
+
+	if(strTemp[0] != '#' && strTemp1[0] != '#')
+	{
+		if( strcmp(strTemp,strTemp1) ==0 )
+		{
+			m_Stack.Push(0,"#");
+		}
+		else
+			m_Stack.Push(1,"#");
+
+		//    PrintMessage("%s != %s" ,strTemp,strTemp1);                     
+
+		return;    
+
+	}
+
+	if(temp1==temp2)
+		m_pop.Value=0;
+	else
+		m_pop.Value=1;
+
+#ifdef DEBUG    
+	PrintMessage("%f == %f",temp1,temp2);
+#endif
+	m_Stack.Push(m_pop.Value,"#");
 
 }
 //x<y
@@ -890,7 +912,14 @@ void CVirtualMachine::Ceil()
 //Command
 void CVirtualMachine::Command()
 {
-    m_Stack.Push(0,m_pPlayer1->GetCommand());
+	if (strcmp(m_pPlayer1->GetCommand(), "") != 0)
+	{
+		m_Stack.Push(0,m_pPlayer1->GetCommand());
+	}
+	else
+	{
+		m_Stack.Push(0,"~~");
+	}
 }
 
 //Const
@@ -1223,12 +1252,11 @@ void CVirtualMachine::FrontEdgeDist()
 //FVAR
 void CVirtualMachine::FVar()
 {
-   /* PopValue();
+    PopValue();
     temp1=m_pop.Value;
     
     temp1=m_pPlayer1->GetFVar((int)temp1);
     m_Stack.Push(temp1,"#");
-*/
 }
 
 //GameTime
@@ -1625,15 +1653,15 @@ void CVirtualMachine::PrevStateNo()
 void CVirtualMachine::Pos()
 {
     //1 = X Value
-  /*  if(m_Stack.Pop().Value==1)
+    if(m_Stack.Pop().Value==1)
     {
-           m_Stack.Push(m_pPlayer1->PlRtInfo.x-XROOT,"#");
+           m_Stack.Push(m_pPlayer1->x,"#");
     }//Else y value
     else
     {
         //default
-        m_Stack.Push(m_pPlayer1->PlRtInfo.y,"#");
-    }*/
+        m_Stack.Push(m_pPlayer1->y,"#");
+    }
 
 }
 
@@ -1655,9 +1683,8 @@ void CVirtualMachine::ProjCancelTime()
 }
 void CVirtualMachine::Random()
 {
-  /*srand(1);
-  m_Stack.Push((float)rand(),"#");  */
-
+	srand(1);
+	m_Stack.Push((float)rand(),"#");  
 }
 
 void CVirtualMachine::RootDist()
@@ -1708,7 +1735,7 @@ void CVirtualMachine::ScreenPos()
 
 void CVirtualMachine::SelfAnimExist()
 {
-   /* int nAnim;
+    int nAnim;
     PopValue();
     nAnim=(int)m_pop.Value;
     //If != NULL push true else push false
@@ -1716,8 +1743,6 @@ void CVirtualMachine::SelfAnimExist()
         m_Stack.Push(1,"#");
     else
         m_Stack.Push(0,"#");
-    
-*/
 }
 
 
@@ -1743,15 +1768,20 @@ void CVirtualMachine::StateTime()
 
 void CVirtualMachine::SysFVar()
 {
-    m_Stack.Pop();
-    m_Stack.Push(0,"#");
+	m_Stack.Pop();
+	int index = m_pop.Value;
 
+	int value = m_pPlayer1->GetSysFVar(index);
+	m_Stack.Push(value,"#");
 }
 
 void CVirtualMachine::SysVar()
 {
-    m_Stack.Pop();
-    m_Stack.Push(0,"#");
+	m_Stack.Pop();
+	int index = m_pop.Value;
+
+	int value = m_pPlayer1->GetSysVar(index);
+	m_Stack.Push(value,"#");
 
 }
 
@@ -1777,7 +1807,7 @@ void CVirtualMachine::TicksPerSecond()
 
 void CVirtualMachine::Time()
 {
-  //  m_Stack.Push(m_pPlayer1->PlRtInfo.nStateTime,"#");
+    //m_Stack.Push(m_pPlayer1->PlRtInfo.nStateTime,"#");
 }
 
 void CVirtualMachine::UniqHitCount()
@@ -1788,21 +1818,24 @@ void CVirtualMachine::UniqHitCount()
 void CVirtualMachine::Var()
 {
      m_Stack.Pop();
-     m_Stack.Push(1,"#");
+	 int index = m_pop.Value;
+
+	 int value = m_pPlayer1->GetVar(index);
+     m_Stack.Push(value,"#");
 }
 
 void CVirtualMachine::Vel()
 {
     //1 = X Value
-   /* if(m_Stack.Pop().Value==1)
+    if(m_Stack.Pop().Value==1)
     {
-       m_Stack.Push(m_pPlayer1->PlRtInfo.xvel,"#");
+       m_Stack.Push(m_pPlayer1->xVel,"#");
     }//Else y value
     else
     {
         //default
-        m_Stack.Push(m_pPlayer1->PlRtInfo.xvel,"#");
-    }*/
+        m_Stack.Push(m_pPlayer1->yVel,"#");
+    }
 
 }
 

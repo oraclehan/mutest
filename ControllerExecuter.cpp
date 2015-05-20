@@ -121,7 +121,7 @@ void CControllerExecuter::InitFuncTable()
     pFuncTable[81]=NULL;
     pFuncTable[82]=&CControllerExecuter::VarSet;;
     pFuncTable[83]=&CControllerExecuter::VelSet;
-    pFuncTable[84]=NULL;
+    pFuncTable[84]=&CControllerExecuter::VelMul;
     pFuncTable[85]=&CControllerExecuter::VelSet;;
     pFuncTable[86]=NULL;
     pFuncTable[87]=NULL;
@@ -183,7 +183,7 @@ void CControllerExecuter::VelSet()
 //VarSet Controller
 void CControllerExecuter::VarSet()
 {
-	/*
+	
     float fVarValue=0;
     int index=0;
     
@@ -193,8 +193,8 @@ void CControllerExecuter::VarSet()
 	fVarValue=((CPlayer*)m_pPlayer1)->GetParamValue(PA_VAR);
     if(fVarValue!=NOPARAM)
     {
-        index=(int)((CPlayer*)m_pPlayer1)->m_Stack.Pop().Value;
-       ((CPlayer*)m_pPlayer1)->SetIVar(index,fVarValue);
+        index=(int)((CPlayer*)m_pPlayer1)->m_pVMachine->m_Stack.Pop().Value;
+       ((CPlayer*)m_pPlayer1)->SetVar(index,fVarValue);
     
     }
 
@@ -202,7 +202,7 @@ void CControllerExecuter::VarSet()
     fVarValue=((CPlayer*)m_pPlayer1)->GetParamValue(PA_FVAR);
     if(fVarValue!=NOPARAM)
     {
-        index=(int)((CPlayer*)m_pPlayer1)->m_VM.m_Stack.Pop().Value;
+        index=(int)((CPlayer*)m_pPlayer1)->m_pVMachine->m_Stack.Pop().Value;
        ((CPlayer*)m_pPlayer1)->SetFVar(index,fVarValue);
     
     }
@@ -211,8 +211,8 @@ void CControllerExecuter::VarSet()
     fVarValue=((CPlayer*)m_pPlayer1)->GetParamValue(PA_SYSVAR);
     if(fVarValue!=NOPARAM)
     {
-        index=(int)((CPlayer*)m_pPlayer1)->m_VM.m_Stack.Pop().Value;
-       ((CPlayer*)lpPlayer)->SetSysVar(index,fVarValue);
+        index=(int)((CPlayer*)m_pPlayer1)->m_pVMachine->m_Stack.Pop().Value;
+       ((CPlayer*)m_pPlayer1)->SetSysVar(index,fVarValue);
     
     }
     
@@ -220,12 +220,24 @@ void CControllerExecuter::VarSet()
     fVarValue=((CPlayer*)m_pPlayer1)->GetParamValue(PA_SYSFVAR);
     if(fVarValue!=NOPARAM)
     {
-        index=(int)((CPlayer*)m_pPlayer1)->m_VM.m_Stack.Pop().Value;
-       ((CPlayer*)lpPlayer)->SetSysFVar(index,fVarValue);
+        index=(int)((CPlayer*)m_pPlayer1)->m_pVMachine->m_Stack.Pop().Value;
+       ((CPlayer*)m_pPlayer1)->SetSysFVar(index,fVarValue);
     
     }
 
-    
-        */
+}
 
+void CControllerExecuter::VelMul()
+{
+	float x=((CPlayer*)m_pPlayer1)->GetParamValue(PA_XVALUE);
+	float y=((CPlayer*)m_pPlayer1)->GetParamValue(PA_YVALUE);
+#ifdef DEBUG
+	PrintMessage("Velset X=%f,Y=%f",x,y);
+#endif
+
+	if(x!=NOPARAM)
+		((CPlayer*)m_pPlayer1)->VelSetX(x);
+
+	if(y!=NOPARAM)
+		((CPlayer*)m_pPlayer1)->VelSetY(y);
 }
