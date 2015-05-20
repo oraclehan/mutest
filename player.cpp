@@ -120,6 +120,11 @@ Handles the FSM of the player
 */
 void CPlayer::HandleFSM()
 {
+	if (m_CmdManager.GetCurrentCommandName() && strcmp(m_CmdManager.GetCurrentCommandName(), "holddown") == 0)
+	{
+		int a;
+		a = 0;
+	}
 	//execute -3 .. -1 state
 	for (int index = -3; index < 0; index++)
 	{
