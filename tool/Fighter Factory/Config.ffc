@@ -15,7 +15,7 @@ CruzSFF=4
 Convert24=0
 AddEnd=0
 Ruler=1
-Mini=1
+Mini=0
 Backup=0
 RunParameters=%1 %1
 
