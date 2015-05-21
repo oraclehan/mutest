@@ -1,4 +1,5 @@
 #include "global.h"
+#include "Input.h"
 
 
 CCmdManager::CCmdManager( int keyBufferSize )
@@ -19,7 +20,7 @@ CCmdManager::~CCmdManager()
     delete m_KeyBuffer;
 }
 
-bool CCmdManager::LoadCMDFile( const char* file, bool bPlayer2)
+bool CCmdManager::LoadCMDFile( const char* file)
 {
     int defaultCommandTime = 15;
     int defaultBufferTime = 1;
@@ -126,7 +127,7 @@ bool CCmdManager::LoadCMDFile( const char* file, bool bPlayer2)
                            
                             if( !strcmp( token, "~" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyModifier += PLC_KEYMOD_ON_RELEASE;
+                                command->nCommand[ command->nHowManyCommand ].keyModifier += GetKeyModOnRelease();
                                 if( tok.CheckTokenIsNumber() )
                                 {
                                     command->nCommand[ command->nHowManyCommand ].gameTicksForHold = tok.GetInt();
@@ -141,15 +142,15 @@ bool CCmdManager::LoadCMDFile( const char* file, bool bPlayer2)
                             }
                             else if( !strcmp( token, "/" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyModifier += PLC_KEYMOD_MUST_BE_HELD;
+                                command->nCommand[ command->nHowManyCommand ].keyModifier += GetKeyMustBeHeld();
                             }
                             else if( !strcmp( token, "$" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyModifier += PLC_KEYMOD_DETECT_AS_4WAY;
+                                command->nCommand[ command->nHowManyCommand ].keyModifier += GetKeyModDetectAs4Way();
                             }
                             else if( !strcmp( token, ">" ) )
                             {
-                                command->nCommand[ command->nHowManyCommand ].keyModifier += PLC_KEYMOD_BAN_OTHER_INPUT;
+                                command->nCommand[ command->nHowManyCommand ].keyModifier += GetKeyModBanOtherInput();
                             }
                             else if( !strcmp( token, "," ) )
                             {
@@ -255,7 +256,7 @@ bool CCmdManager::LoadCMDFile( const char* file, bool bPlayer2)
     return true;
 }
 
-void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
+void CCmdManager::Update(bool facingRight )
 {
     m_CurrCommandName = NULL;
     m_KeyBuffer[ m_KeyIndex ].keyBitfield = 0;
@@ -265,7 +266,7 @@ void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
     // add current keystrokes to input buffer
     for( int k = 0; k < KEY_COUNT; k++ )
     {
-        if( keys->keyInfo[ k ].isPressed )
+        if( m_keyPressed[ k ])
         {
             if( ( k == KEY_LEFT ) && !facingRight )
             {
@@ -292,10 +293,10 @@ void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
         for( int b = currCommand->nHowManyCommand - 1; b >= 0; b-- )
         {
             bool bCommand = false;
-            bool onRelease = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_ON_RELEASE ) != 0 );
-            bool onHold = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_MUST_BE_HELD ) != 0 );
-            bool use4Way = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_DETECT_AS_4WAY ) != 0 );
-            bool banOtherInput = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_BAN_OTHER_INPUT ) != 0 );
+            bool onRelease = (( currCommand->nCommand[ b ].keyModifier & GetKeyModOnRelease() ) != 0 );
+            bool onHold = (( currCommand->nCommand[ b ].keyModifier & GetKeyMustBeHeld() ) != 0 );
+            bool use4Way = (( currCommand->nCommand[ b ].keyModifier & GetKeyModDetectAs4Way() ) != 0 );
+            bool banOtherInput = (( currCommand->nCommand[ b ].keyModifier & GetKeyModBanOtherInput() ) != 0 );
             int gameTicksToHold = currCommand->nCommand[ b ].gameTicksForHold;
             int keyCode = currCommand->nCommand[ b ].keyCode;
             
@@ -305,8 +306,8 @@ void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
                 bool keyDown = (( frameInput->keyBitfield & keyCode ) == keyCode );
                 if( keyDown && !use4Way )
                 {
-                    int keyCodeDirs = ( keyCode & PLC_ALL_DIRECTIONS_BITFIELD );
-                    int frameInputDirs = ( frameInput->keyBitfield & PLC_ALL_DIRECTIONS_BITFIELD );
+                    int keyCodeDirs = ( keyCode & GetAllDirectionsBitField() );
+                    int frameInputDirs = ( frameInput->keyBitfield & GetAllDirectionsBitField() );
                     keyDown = !keyCodeDirs || ( keyCodeDirs == frameInputDirs );
                 }
                 
@@ -322,8 +323,8 @@ void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
                         bool keyDown2 = (( frameInput2->keyBitfield & keyCode ) == keyCode );
                         if( keyDown2 && !use4Way )
                         {
-                            int keyCodeDirs = ( keyCode & PLC_ALL_DIRECTIONS_BITFIELD );
-                            int frameInputDirs = ( frameInput2->keyBitfield & PLC_ALL_DIRECTIONS_BITFIELD );
+                            int keyCodeDirs = ( keyCode & GetAllDirectionsBitField() );
+                            int frameInputDirs = ( frameInput2->keyBitfield & GetAllDirectionsBitField() );
                             keyDown2 = !keyCodeDirs || ( keyCodeDirs == frameInputDirs );
                         }  
                         if( keyDown2 )
@@ -400,5 +401,47 @@ void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
 const char* CCmdManager::GetCurrentCommandName()  
 { 
     return m_CurrCommandName; 
+}
+
+void CCmdManager::RegisterKeys( Uint16 sdl_code[])
+{
+
+	for( int k = 0; k < KEY_COUNT; k++ )
+	{
+		m_keyMap[k] = sdl_code[k];
+	}
+	for (u16 index = 0; index < KEY_COUNT; index++)
+	{
+		CInput::GetInstance()->RegKeys(m_keyMap[index],
+				[=](Uint8 bPressed) {
+					m_keyPressed[index] = bPressed;
+				}
+		);
+	}
+}
+
+Uint16 CCmdManager::GetKeyModOnRelease()
+{
+	return PLC_KEYMOD_ON_RELEASE;
+}
+
+Uint16 CCmdManager::GetKeyMustBeHeld()
+{
+	return PLC_KEYMOD_MUST_BE_HELD;
+}
+
+Uint16 CCmdManager::GetKeyModDetectAs4Way()
+{
+	return PLC_KEYMOD_DETECT_AS_4WAY;
+}
+
+Uint16 CCmdManager::GetKeyModBanOtherInput()
+{
+	return PLC_KEYMOD_BAN_OTHER_INPUT;
+}
+
+Uint16 CCmdManager::GetAllDirectionsBitField()
+{
+	return PLC_ALL_DIRECTIONS_BITFIELD;
 }
 

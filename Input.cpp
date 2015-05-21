@@ -33,16 +33,37 @@ CInput::~CInput()
 
 }
 //Process InputData
-void CInput::ProcessInput(KEYBOARDDATA *lpKeyBoard,SDL_Event event)
+void CInput::ProcessInput()
 {
     Uint8 *keystate = SDL_GetKeyState(NULL);
     
-    //Process keyboard input
-    //if( lpKeyBoard->bKeyBoard )
-    {
-        for( int k = 0; k < KEY_COUNT; k++ )
-        {
-            lpKeyBoard->keyInfo[ k ].isPressed = keystate[ lpKeyBoard->keyInfo[ k ].sdlKeycode ];
-        }
-    }  
+	for(const auto& item : m_keyMap)
+	{
+		item.second(keystate[item.first]);
+	}
+//     {
+//         for( int k = 0; k < KEY_COUNT; k++ )
+//         {
+//             lpKeyBoard->keyInfo[ k ].isPressed = keystate[ lpKeyBoard->keyInfo[ k ].sdlKeycode ];
+//         }
+//     }  
+}
+
+CInput * CInput::GetInstance()
+{
+	static CInput *Instance = nullptr;
+	if (!Instance)
+	{
+		Instance = new CInput;
+	}
+	return Instance;
+}
+
+void CInput::RegKeys( Uint16 key,const std::function<void(Uint8)> & func )
+{
+	if (m_keyMap.find(key) == m_keyMap.end())
+	{
+		m_keyMap[key] = func;
+	}
+	
 }

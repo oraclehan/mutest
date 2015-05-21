@@ -82,7 +82,7 @@ bool CPlayer::LoadPlayer(const char* strPlayer)
 	 StateParser.ParseStateFile("common1.cns",m_StateManager,m_pAlloc);
 	 StateParser.ParseStateFile("kfm/kfm.cns",m_StateManager,m_pAlloc);
 
-	 m_CmdManager.LoadCMDFile("kfm/kfm.cmd", strcmp(strPlayer, "player2") == 0);
+	 m_CmdManager.LoadCMDFile("kfm/kfm.cmd");
      //StateParser.ParseStateFile("cns.txt",m_StateManager,m_pAlloc);
 	 //StateParser.ParseStateFile("kfm/kfm.cns",m_StateManager,m_pAlloc);
      m_AirManager.OpenAir("kfm/kfm.air");
@@ -99,6 +99,14 @@ bool CPlayer::LoadPlayer(const char* strPlayer)
      ChangeState(0);    
      
 	 return true;
+}
+
+void CPlayer::SetKeys(Uint16 sdl_code[])
+{
+	if (sdl_code)
+	{
+		m_CmdManager.RegisterKeys(sdl_code);
+	}
 }
 
 
@@ -212,9 +220,9 @@ void CPlayer::ExecuteController(PLSTATE* tempState)
 }
 
 //updates all interlal stuff of the player
-void CPlayer::UpDatePlayer(const KEYBOARDDATA &data)
+void CPlayer::UpDatePlayer()
 {
-	m_CmdManager.Update((KEYBOARDDATA*)(&data), bRightFaced);
+	m_CmdManager.Update(bRightFaced);
 
 	memset(strCommand, 0, sizeof(strCommand));
 

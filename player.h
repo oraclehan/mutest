@@ -67,7 +67,7 @@ public:
     ~CPlayer();
     void SetPointers(CVideoSystem *p,CAllocater *a,CGameTimer *t);
     bool LoadPlayer(const char* strPlayer);
-    void UpDatePlayer(const KEYBOARDDATA &data);
+    void UpDatePlayer();
     void DrawPlayer();
 //Set functions
     void SetVM(CVirtualMachine *p){m_pVMachine=p;}
@@ -105,6 +105,8 @@ public:
 	float GetSysFVar(int index);
 
 	void SetEngine(CEngine *pEngine) {m_pEngine = pEngine;};
+
+	void SetKeys(Uint16 sdl_code[]);
 
 private:
     bool CheckState(PLSTATE* tempState);

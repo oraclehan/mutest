@@ -63,37 +63,7 @@ void CGame::InitGame()
     m_FightEngine.InitEngine(&m_MemManager,
                              m_SdlManager.GetVideoSystem(),
                              &m_Timer);
-	Uint16 sdlk_code[] = {
-		SDLK_w,
-		SDLK_s,
-		SDLK_a,
-		SDLK_d,
-		SDLK_u,
-		SDLK_i,
-		SDLK_o,
-		SDLK_j,
-		SDLK_k,
-		SDLK_l,
-		SDLK_1,
-		SDLK_2,
-		SDLK_UP,
-		SDLK_DOWN,
-		SDLK_LEFT,
-		SDLK_RIGHT,
-		SDLK_KP4,
-		SDLK_KP5,
-		SDLK_KP6,
-		SDLK_KP1,
-		SDLK_KP2,
-		SDLK_KP3,
-		SDLK_3,
-		SDLK_4,
-	};
-
-	for( int k = 0; k < KEY_COUNT; k++ )
-	{
-		m_keyBoardData.keyInfo[ k ].sdlKeycode = sdlk_code[k];
-	}
+	
     m_MemManager.GetMemUsage();
 }
 //The main game Loop
@@ -103,6 +73,9 @@ void CGame::RunGame()
     {
        //Checks SDL system and Get Input
        CheckSDL();
+
+	   CInput::GetInstance()->ProcessInput();
+
        //UpDateTimer;
        m_Timer.UpdateTimer();
        //Clear the Screen
@@ -112,7 +85,7 @@ void CGame::RunGame()
        {
           //We running the Fight engine
           case GFIGHTGAME:
-               m_FightEngine.RunEngine(m_keyBoardData);
+               m_FightEngine.RunEngine();
           break;
           //We are in the menu screen
           case GMENU:
@@ -141,7 +114,6 @@ void CGame::CheckSDL()
    if(event.key.keysym.sym==SDLK_ESCAPE)
        bGame=false;
 
-   CInput::ProcessInput(&m_keyBoardData, event);
  
 }
 

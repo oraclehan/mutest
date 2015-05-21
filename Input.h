@@ -24,16 +24,26 @@
 #define C_INPUT_H
 
 #include "global.h"
+#include <functional>
 
 class CInput
 {
 public:
-    CInput();
+    
     ~CInput();
     
-    static void ProcessInput(KEYBOARDDATA *lpKeyBoard,SDL_Event event);
+    void ProcessInput();
 
+	//cmd注册自己关心的键位
+	void RegKeys(Uint16 key,const std::function<void(Uint8)> & func);
 
+	//sdlkeycode, 
+	std::map<Uint16, std::function<void(Uint8)>> m_keyMap;
+
+	static CInput * GetInstance();
+
+private:
+	CInput();
 
 };
 

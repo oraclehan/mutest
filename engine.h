@@ -16,7 +16,7 @@ public:
 	float m_sysVar[200];
 
 	void ResetEngine();
-	void RunEngine(const KEYBOARDDATA &data);
+	void RunEngine();
 	void InitEngine(CMemManager *m,CVideoSystem *v,CGameTimer *t);           
       
 };

@@ -64,8 +64,38 @@ void CEngine::InitEngine(CMemManager *m,CVideoSystem *v,CGameTimer *t)
     player1.SetPos(70,220);
     player2.SetPos(240,220);
     
+	Uint16 sdlk_code1[] = {
+		SDLK_w,
+		SDLK_s,
+		SDLK_a,
+		SDLK_d,
+		SDLK_u,
+		SDLK_i,
+		SDLK_o,
+		SDLK_j,
+		SDLK_k,
+		SDLK_l,
+		SDLK_1,
+		SDLK_2,
+		
+	};
 
-    
+	Uint16 sdlk_code2[] = {
+		SDLK_UP,
+		SDLK_DOWN,
+		SDLK_LEFT,
+		SDLK_RIGHT,
+		SDLK_KP4,
+		SDLK_KP5,
+		SDLK_KP6,
+		SDLK_KP1,
+		SDLK_KP2,
+		SDLK_KP3,
+		SDLK_3,
+		SDLK_4,
+	};
+    player1.SetKeys(sdlk_code1);
+	player2.SetKeys(sdlk_code2);
     player1.LoadPlayer("player1");
     player2.LoadPlayer("player2");
     
@@ -80,10 +110,10 @@ Upates all the engine members and draw them to the screen
 Handels also AI and player movement
 ================================================================================
 */
-void CEngine::RunEngine(const KEYBOARDDATA &data)
+void CEngine::RunEngine()
 {
-  player1.UpDatePlayer(data);
-  player2.UpDatePlayer(data);
+  player1.UpDatePlayer();
+  player2.UpDatePlayer();
 
   player1.DrawPlayer();
   player2.DrawPlayer();

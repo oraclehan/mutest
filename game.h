@@ -59,7 +59,6 @@ float nFrameRate;
 //for event handling
 SDL_Event event;
 
-KEYBOARDDATA m_keyBoardData;
 };
 
 
