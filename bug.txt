@@ -3,6 +3,7 @@
 --3、没有特殊处理-1，-2，-3的状态
 --实现varset控制器
 --两个角色拆分cmd管理器
+表达式优先级问题 trigger2 = Anim = 0 + 5 && AnimTime = 0 ;Turn anim over
+实现开场
 实现左右移动
 实现跳跃
-表达式优先级问题 trigger2 = Anim = 0 + 5 && AnimTime = 0 ;Turn anim over

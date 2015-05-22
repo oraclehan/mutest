@@ -41,12 +41,6 @@ void CInput::ProcessInput()
 	{
 		item.second(keystate[item.first]);
 	}
-//     {
-//         for( int k = 0; k < KEY_COUNT; k++ )
-//         {
-//             lpKeyBoard->keyInfo[ k ].isPressed = keystate[ lpKeyBoard->keyInfo[ k ].sdlKeycode ];
-//         }
-//     }  
 }
 
 CInput * CInput::GetInstance()
